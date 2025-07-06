@@ -1,0 +1,6 @@
+streamlit==1.46.1
+rembg[cli,gpu]==2.0.67
+onnxruntime==1.22.0
+Pillow==9.5.0
+pandas==2.2.2
+matplotlib==3.8.4
