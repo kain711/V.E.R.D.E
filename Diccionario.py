@@ -1,6 +1,6 @@
 import streamlit as st
-import os
-import pandas as pd
+
+
 """
 ruta_imagenes = "G:\VERDE-Vision-electronica-de-reconocimiento-de-especies\pagina_web\imagenes_dicc"
 imagenes = sorted([img for img in os.listdir(ruta_imagenes) if img.lower().endswith(".jpg")])
