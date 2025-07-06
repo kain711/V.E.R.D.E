@@ -1,6 +1,6 @@
 import streamlit as st
 import FAQ
-import Diccionario
+from Diccionario import inicio_diccionario
 from remove_bg import *
 def inicio():
     st.title("Bienvenido a la página de inicio de V.E.R.D.E")
@@ -25,6 +25,6 @@ if __name__=="__main__":
         inicio()
         subir_foto()
     elif pagina=="Diccionario":
-        Diccionario
+        inicio_diccionario()
     elif pagina=="FAQ":
-        FAQ
+        FAQ.inicio_faq()
