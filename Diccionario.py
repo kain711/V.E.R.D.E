@@ -65,5 +65,5 @@ def inicio_diccionario():
     #df_info = pd.read_csv("plantas_info.csv")  # columnas: especie,nombre_comun,descripcion
 
     # Carpeta de imágenes
-    ruta_imagenes = "G:\VERDE-Vision-electronica-de-reconocimiento-de-especies\pagina_web\imagenes_dicc"
+    ruta_imagenes = r"G:\VERDE-Vision-electronica-de-reconocimiento-de-especies\pagina_web\imagenes_dicc"
   
