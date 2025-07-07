@@ -1,7 +1,4 @@
-streamlit
-Pillow
-matplotlib
-rembg>=2.0.78
-onnxruntime
-numba>=0.61.0
-llvmlite>=0.44.0
+streamlit==1.25.0
+rembg==2.0.50
+onnxruntime==1.16.3
+Pillow==9.4.0
