@@ -11,8 +11,15 @@ def procesar_img(uploaded_file):
     buffered = io.BytesIO()
     input_image.save(buffered, format="PNG")
     input_bytes = buffered.getvalue()
-    ## Remover fondo
-    output_bytes = remove(input_bytes)
+    #verificar si tiene fondo transparente
+    if input_image.mode == "RGBA":
+        # Si ya tiene fondo transparente, no es necesario removerlo
+        return input_image
+        #casi contrario remover el fondo
+    else:
+    # Remover fondo
+        output_bytes = remove(input_bytes)
+    
 
     # Reconstruir imagen con transparencia
     output_image = Image.open(io.BytesIO(output_bytes)).convert("RGBA")
