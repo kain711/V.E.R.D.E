@@ -2,6 +2,8 @@ import streamlit as st
 import FAQ
 from Diccionario import inicio_diccionario
 from remove_bg import *
+from modelo_predictor import predecir
+
 def inicio():
     st.title("Bienvenido a la página de inicio de V.E.R.D.E")
     st.write("Esta es la página de inicio de la aplicación. Aqui puedes subir una foto de una planta y descubrir sus beneficios.")
@@ -16,6 +18,9 @@ def subir_foto():
         foto_procesada=procesar_img(uploaded_file)
         st.image(foto_procesada,caption="Foto procesada",use_column_width=True)
         st.write("Esta es la foto que usa el algorimo de ML para detectar la planta")
+        clase, conf = predecir(foto_procesada)
+        st.success(f"🌿 La planta parece ser: **{clase}** con una confianza de {conf:.2%}")
+
 
 #*************Inicio de la pagina********************
 if __name__=="__main__":
