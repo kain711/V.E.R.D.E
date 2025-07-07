@@ -6,7 +6,7 @@ from PIL import Image
 modelo = tf.keras.models.load_model("modelo9c.h5")
 
 # Clases en el orden exacto del entrenamiento
-clases = ['Altamizo', 'Torongil', 'cedron', 'pushasha', 'romero', 'ruda', 'sabila', 'tomate'] 
+clases = ['Acchocha','Altamizo', 'Torongil', 'cedron', 'pushasha', 'romero', 'ruda', 'sabila', 'tomate'] 
 
 def predecir(imagen):
     # Asegurar tamaño correcto
