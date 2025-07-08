@@ -15,10 +15,10 @@ def subir_foto():
         st.image(uploaded_file, caption="Foto subida.", use_column_width=True)
         st.write("La foto ha sido subida correctamente.")
         st.write("Ahora puedes explorar los beneficios de la planta.")
-        foto_procesada=procesar_img(uploaded_file)
-        st.image(foto_procesada,caption="Foto procesada",use_column_width=True)
+        #foto_procesada=procesar_img(uploaded_file)
+        st.image(uploaded_file,caption="Foto procesada",use_column_width=True)
         st.write("Esta es la foto que usa el algorimo de ML para detectar la planta")
-        clase, conf = predecir(foto_procesada)
+        clase, conf = predecir(uploaded_file)
         st.success(f"🌿 La planta parece ser: **{clase}** con una confianza de {conf:.2%}")
 
 
