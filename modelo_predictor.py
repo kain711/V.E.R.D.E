@@ -9,16 +9,19 @@ modelo = tf.keras.models.load_model("modelo_cnn_9clases.h5")
 clases = ['Acchocha','Altamizo', 'Torongil', 'cedron', 'pushasha', 'romero', 'ruda', 'sabila', 'tomate'] 
 
 def predecir(imagen):
-    # Asegurar tamaño correcto
-    imagen = imagen.resize((100, 100))
-    imagen = imagen.convert("RGB")
-    img_array = np.array(imagen) / 255.0
-    img_array = np.expand_dims(img_array, axis=0)
+    try:
+        imagen = imagen.convert("RGB")
+        # Asegurar tamaño correcto
+        imagen = imagen.resize((100, 100))
+        img_array = np.array(imagen) / 255.0
+        img_array = np.expand_dims(img_array, axis=0)
     
-    # Predicción
-    pred = modelo.predict(img_array)
-    clase_predicha = clases[np.argmax(pred)]
-    confianza = np.max(pred)
-    
-    return clase_predicha, confianza
+        # Predicción
+        pred = modelo.predict(img_array)
+        clase_predicha = clases[np.argmax(pred)]
+        confianza = np.max(pred)
 
+        return clase_predicha, confianza
+    except Exception as e:
+        print(f"Error al procesar la imagen: {e}")
+        return None, None
