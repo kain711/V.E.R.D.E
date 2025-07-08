@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 
 # Cargar el modelo una sola vez
-modelo = tf.keras.models.load_model("modelo9c.h5")
+modelo = tf.keras.models.load_model("modelo_cnn_9clases.h5")
 
 # Clases en el orden exacto del entrenamiento
 clases = ['Acchocha','Altamizo', 'Torongil', 'cedron', 'pushasha', 'romero', 'ruda', 'sabila', 'tomate'] 
