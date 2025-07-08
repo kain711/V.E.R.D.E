@@ -10,16 +10,33 @@ def inicio():
     st.write("Para comenzar, haz clic en el botón 'Subir foto'.")
     
 def subir_foto():
-    uploaded_file=st.file_uploader("Elige una foto",type=["jpg","jpeg","png"])
+    uploaded_file = st.file_uploader("Elige una foto", type=["jpg", "jpeg", "png"])
+    
     if uploaded_file is not None:
-        st.image(uploaded_file, caption="Foto subida.", use_column_width=True)
-        st.write("La foto ha sido subida correctamente.")
-        st.write("Ahora puedes explorar los beneficios de la planta.")
-        #foto_procesada=procesar_img(uploaded_file)
-        st.image(uploaded_file,caption="Foto procesada",use_column_width=True)
-        st.write("Esta es la foto que usa el algorimo de ML para detectar la planta")
-        clase, conf = predecir(uploaded_file)
-        st.success(f"🌿 La planta parece ser: **{clase}** con una confianza de {conf:.2%}")
+        # Convertir el archivo subido a una imagen PIL
+        try:
+            imagen = Image.open(uploaded_file)
+            st.image(imagen, caption="Foto subida.", use_column_width=True)
+            st.write("La foto ha sido subida correctamente.")
+            st.write("Ahora puedes explorar los beneficios de la planta.")
+            
+            # Mostrar la imagen procesada (opcional)
+            st.image(imagen, caption="Foto procesada", use_column_width=True)
+            st.write("Esta es la foto que usa el algoritmo de ML para detectar la planta")
+            
+            # Llamada a la función de predicción
+            clase, conf = predecir(imagen)
+            
+            # Verificar si la predicción fue exitosa
+            if clase and conf is not None:
+                st.success(f"🌿 La planta parece ser: **{clase}** con una confianza de {conf:.2%}")
+            else:
+                st.error("⚠️ No se pudo realizar la predicción.")
+        
+        except Exception as e:
+            st.error(f"Error al procesar la imagen: {e}")
+            return
+
 
 
 #*************Inicio de la pagina********************
