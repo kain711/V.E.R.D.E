@@ -2,7 +2,7 @@ import streamlit as st
 import FAQ
 from Diccionario import inicio_diccionario
 from remove_bg import *
-from modelo_predictor import predecir
+from modelo_predictor import predecir_etiquetas
 
 def inicio():
     st.title("Bienvenido a la página de inicio de V.E.R.D.E")
@@ -25,11 +25,11 @@ def subir_foto():
             st.write("Esta es la foto que usa el algoritmo de ML para detectar la planta")
             
             # Llamada a la función de predicción
-            clase, conf = predecir(imagen)
-            
+            clases, conf = predecir_etiquetas(imagen)
+
             # Verificar si la predicción fue exitosa
-            if clase and conf is not None:
-                st.success(f"🌿 La planta parece ser: **{clase}** con una confianza de {conf:.2%}")
+            if clases and conf is not None:
+                st.success(f"🌿 La planta parece ser: **{clases}** con una confianza de {conf:.2%}")
             else:
                 st.error("⚠️ No se pudo realizar la predicción.")
         
