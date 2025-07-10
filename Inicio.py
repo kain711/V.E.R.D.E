@@ -29,7 +29,10 @@ def subir_foto():
 
             # Verificar si la predicción fue exitosa
             if clases and conf is not None:
-                st.success(f"🌿 La planta parece ser: **{clases}** con una confianza de {conf:.2%}")
+                pred_text="\n".join(
+                    f"- {label}: {conf[label]*100:.2f}%" for label in clases
+                )
+                st.success(f"🌿La planta parece ser :\n{pred_text}")
             else:
                 st.error("⚠️ No se pudo realizar la predicción.")
         
