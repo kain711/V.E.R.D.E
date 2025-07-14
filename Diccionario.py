@@ -40,7 +40,9 @@ def inicio_diccionario():
 
     # Botón de acción (a implementar después)
     
-    st.header("No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
+    st.markdown("---" * 50)
+
+    # Agregar nueva planta
     if st.button("Agregar nueva planta"):
         st.write("Funcionalidad de agregar planta aún no implementada.")
         # Aquí podrías implementar la lógica para agregar una nueva planta al diccionario.
