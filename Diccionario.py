@@ -59,11 +59,78 @@ def inicio_diccionario():
 """
 
 def inicio_diccionario():
-    st.title("🌿 Diccionario de Plantas Locales")
+   pass
+import streamlit as st
+import psycopg2
+from PIL import Image
+import os
 
-    # Cargar la información desde el archivo CSV
-    #df_info = pd.read_csv("plantas_info.csv")  # columnas: especie,nombre_comun,descripcion
+# --- Configuración inicial ---
+st.set_page_config(layout="centered", page_title="Diccionario de Plantas")
 
-    # Carpeta de imágenes
-    ruta_imagenes = r"G:\VERDE-Vision-electronica-de-reconocimiento-de-especies\pagina_web\imagenes_dicc"
+# --- Conexión a PostgreSQL ---
+def obtener_detalles_planta(nombre_planta):
+    try:
+        conn = psycopg2.connect(
+            host="localhost",
+            port="5432",
+            database="VERDE",
+            user="postgres",      # <-- Cambia si es diferente
+            password="soporte"  # <-- Cambia por tu contraseña real
+        )
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT nombre, categoria, usos, lugar_geografico, region, caracteristicas_crecimiento
+            FROM plantas
+            WHERE nombre = %s
+        """, (nombre_planta,))
+        resultado = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return resultado
+    except Exception as e:
+        st.error(f"Error al consultar la base de datos: {e}")
+        return None
+
+# --- Lista de plantas ordenadas alfabéticamente ---
+plantas = sorted([
+    "Acchocha", "Altamizo", "Cedron", "Pushasha",
+    "Romero", "Ruda", "Tomate", "Torongil"
+])  # Puedes cargar esta lista desde la BD si lo prefieres
+
+# --- Inicializar estado ---
+if "planta_index" not in st.session_state:
+    st.session_state.planta_index = 0
+
+# --- Navegación del carrusel ---
+col1, col2, col3 = st.columns([1, 2, 1])
+with col1:
+    if st.button("⬅️ Anterior"):
+        st.session_state.planta_index = (st.session_state.planta_index - 1) % len(plantas)
+with col3:
+    if st.button("Siguiente ➡️"):
+        st.session_state.planta_index = (st.session_state.planta_index + 1) % len(plantas)
+
+# --- Mostrar imagen e info ---
+planta_actual = plantas[st.session_state.planta_index]
+st.subheader(f"🌿 {planta_actual}")
+
+# Mostrar imagen
+ruta_imagen = os.path.join("plantas_img", f"{planta_actual}.jpg")
+if os.path.exists(ruta_imagen):
+    st.image(Image.open(ruta_imagen), use_column_width=True)
+else:
+    st.warning("Imagen no disponible.")
+
+# --- Botón de detalles ---
+if st.button("🔍 Ver detalles"):
+    detalles = obtener_detalles_planta(planta_actual)
+    if detalles:
+        nombre, categoria, usos, lugar_geo, region, caracteristicas = detalles
+        st.markdown(f"**Categoría:** {categoria}")
+        st.markdown(f"**Usos:** {usos}")
+        st.markdown(f"**Lugar geográfico (lat/long):** {lugar_geo}")
+        st.markdown(f"**Región:** {region}")
+        st.markdown(f"**Características de crecimiento:** {caracteristicas}")
+
   
