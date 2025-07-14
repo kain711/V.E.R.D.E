@@ -47,16 +47,21 @@ def inicio_diccionario():
         st.write("Funcionalidad de agregar planta aún no implementada.")
         # Aquí podrías implementar la lógica para agregar una nueva planta al diccionario.
         # Podrías usar un formulario para ingresar el nombre, imagen y descripción de la planta.
-        #st.write("Para ingresar una nueva planta, ingresa sus datos en el formulario a continuación:")
+        st.write("Para ingresar una nueva planta, ingresa los datos en el formulario a continuación:")
         
-        # imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
-        # if imagen_planta is not None:
-        #     nombre_planta = st.text_input("Nombre de la planta")
-        #
-        #     nombre_cientifico = st.text_input("Nombre científico de la planta")
+        imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
+        if imagen_planta is not None:
+            nombre_planta = st.text_input("Nombre de la planta")
+        
+            nombre_cientifico = st.text_input("Nombre científico de la planta")
         
         #aqui usar una consulta a la base de datos para ver si ya existe
-    
-        
-        #     st.image(imagen_planta, caption="Imagen de la planta", use_column_width=True)
-        #     descripcion_planta = st.text_area("Descripción de la planta")
+            st.image(imagen_planta, caption="Imagen de la planta", use_column_width=True)
+            st.markdown("------------- Datos geográficos -------------")
+            st.image(imagen_planta, caption="Imagen de la planta", use_column_width=True)
+            descripcion_planta = st.text_area("Descripción de la planta")
+            latitud = st.number_input("Latitud de la planta", format="%.6f")
+            longitud = st.number_input("Longitud de la planta", format="%.6f")
+            region = st.selectbox("Región donde se encuentra la planta", ["Amazonia", "Andes", "Costa", "Selva", "Sierra"])
+            altura_snm = st.number_input("Altura sobre el nivel del mar (en metros)", min_value=0, max_value=10000, step=1)
+            categoria = st.selectbox("Categoría de la planta", ["Comestible", "Medicinal", "Ambas"])
