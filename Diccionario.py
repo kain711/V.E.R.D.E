@@ -26,7 +26,7 @@ def inicio_diccionario():
 
     # Planta actual
     planta_actual = plantas[st.session_state.planta_index]
-    #st.subheader(f"📘 {planta_actual}")
+    st.subheader(f"📘 {planta_actual}")
 
     # Ruta de imagen (debes tener una imagen por planta con ese nombre en plantas_img/)
     ruta_imagen = os.path.join("plantas_img", f"{planta_actual}.jpg")
