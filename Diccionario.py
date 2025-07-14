@@ -44,10 +44,10 @@ def inicio_diccionario():
     st.markdown("## No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
     # Agregar nueva planta
     if st.button("Agregar nueva planta"):
-        st.write("Funcionalidad de agregar planta aún no implementada.")
+        #st.write("Funcionalidad de agregar planta aún no implementada.")
         # Aquí podrías implementar la lógica para agregar una nueva planta al diccionario.
         # Podrías usar un formulario para ingresar el nombre, imagen y descripción de la planta.
-        st.write("Para ingresar una nueva planta, ingresa los datos en el formulario a continuación:")
+        st.write("Para ingresar una nueva planta, carga una imagen de la planta y completa los siguientes campos:")
         
         imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
         if imagen_planta is not None:
