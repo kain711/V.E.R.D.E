@@ -72,7 +72,7 @@ st.set_page_config(layout="centered", page_title="Diccionario de Plantas")
 def obtener_detalles_planta(nombre_planta):
     try:
         conn = psycopg2.connect(
-            host="localhost",
+            host="db.wgkxqgbdnlunertetuts.supabase.co",
             port="5432",
             database="Verde_DB",
             user="soporte",      # <-- Cambia si es diferente
