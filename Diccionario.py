@@ -29,7 +29,7 @@ def inicio_diccionario():
     st.subheader(f"📘 {planta_actual}")
 
     # Ruta de imagen (debes tener una imagen por planta con ese nombre en plantas_img/)
-    ruta_imagen = os.path.join("plantas_img", f"{planta_actual}.jpg")
+    ruta_imagen = os.path.join("plantas_img", f"{planta_actual}.png")
     if os.path.exists(ruta_imagen):
         st.image(Image.open(ruta_imagen), use_column_width=True)
     else:
