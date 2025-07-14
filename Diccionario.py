@@ -74,8 +74,8 @@ def obtener_detalles_planta(nombre_planta):
         conn = psycopg2.connect(
             host="localhost",
             port="5432",
-            database="VERDE",
-            user="postgres",      # <-- Cambia si es diferente
+            database="Verde_DB",
+            user="soporte",      # <-- Cambia si es diferente
             password="soporte"  # <-- Cambia por tu contraseña real
         )
         cursor = conn.cursor()
