@@ -23,10 +23,12 @@ def inicio_diccionario():
     with col3:
         if st.button("Siguiente ➡️"):
             st.session_state.planta_index = (st.session_state.planta_index + 1) % len(plantas)
+        st.button("🔍 Ver detalles", disabled=True)
 
     # Planta actual
     planta_actual = plantas[st.session_state.planta_index]
     st.subheader(f"📘 {planta_actual}")
+    
 
     # Ruta de imagen (debes tener una imagen por planta con ese nombre en plantas_img/)
     ruta_imagen = os.path.join("plantas_img", f"{planta_actual}.png")
@@ -36,4 +38,4 @@ def inicio_diccionario():
         st.warning("⚠️ Imagen no encontrada.")
 
     # Botón de acción (a implementar después)
-    st.button("🔍 Ver detalles", disabled=True)
+    
