@@ -23,6 +23,7 @@ def inicio_diccionario():
     with col3:
         if st.button("Siguiente ➡️"):
             st.session_state.planta_index = (st.session_state.planta_index + 1) % len(plantas)
+    with col2:
         st.button("🔍 Ver detalles", disabled=True)
 
     # Planta actual
