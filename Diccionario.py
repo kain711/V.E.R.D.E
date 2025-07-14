@@ -31,7 +31,7 @@ def inicio_diccionario():
     # Ruta de imagen (debes tener una imagen por planta con ese nombre en plantas_img/)
     ruta_imagen = os.path.join("plantas_img", f"{planta_actual}.jpg")
     if os.path.exists(ruta_imagen):
-        st.image(Image.open(ruta_imagen), use_container_width=True)
+        st.image(Image.open(ruta_imagen), use_column_width=True)
     else:
         st.warning("⚠️ Imagen no encontrada.")
 
