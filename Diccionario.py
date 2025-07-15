@@ -13,7 +13,7 @@ def mostrar_formulario_planta():
         imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
         nombre_planta = st.text_input("Nombre de la planta")
         nombre_cientifico = st.text_input("Nombre científico de la planta")
-        descripcion_planta = st.text_area("Descripción de la planta")
+        
 
         st.markdown("---")
         st.markdown("##### Datos Geográficos")
@@ -23,6 +23,13 @@ def mostrar_formulario_planta():
         altura_snm = st.number_input("Altura sobre el nivel del mar (metros)", min_value=0, step=1)
         categoria = st.selectbox("Categoría", ["Comestible", "Medicinal", "Ambas"])
 
+        st.markdown("---")
+        st.markdown("##### Condiciones ambientales donde prospera la planta")
+        temperatura=st.number_input("Temperatura °C",format="%.6f")
+        ph_suelo=st.number_input("PH del suelo",format="%.6f")
+        tipo_suelo=st.selectbox("Tipo de suelo",["Arcilloso","","Arenoso","Loamoso","Otro(especifique)"])
+        nivel_humedad=st.number_input("Nivel de humedad",format="%.6f")
+        
         # --- Botón de envío del formulario ---
         submitted = st.form_submit_button("Guardar Planta")
 
