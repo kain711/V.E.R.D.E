@@ -34,9 +34,9 @@ def mostrar_formulario_planta():
         nivel_humedad=st.number_input("Nivel de humedad",format="%.2f",min_value=0,max_value=100,step=1)
         
         # --- Botón de envío del formulario ---
-        submitted = st.form_submit_button("Guardar Planta")
+    submitted = st.form_submit_button("Guardar Planta")
 
-        if submitted:
+    if submitted:
             # --- Validación y Recopilación de Datos ---
             if not nombre_planta or not imagen_planta:
                 st.error("Por favor, completa al menos el nombre y sube una imagen.")
