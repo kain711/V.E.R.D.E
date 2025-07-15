@@ -2,6 +2,42 @@ import streamlit as st
 from PIL import Image
 import os
 
+def mostrar_formulario_planta():
+    """Muestra un formulario para agregar una nueva planta y maneja el envío."""
+    st.subheader("Formulario para Nueva Planta")
+    st.write("Completa los siguientes campos para registrar una nueva planta en el diccionario.")
+
+    # Usar st.form para agrupar los campos y tener un único botón de envío
+    with st.form(key="nueva_planta_form", clear_on_submit=True):
+        # --- Campos del formulario ---
+        imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
+        nombre_planta = st.text_input("Nombre de la planta")
+        nombre_cientifico = st.text_input("Nombre científico de la planta")
+        descripcion_planta = st.text_area("Descripción de la planta")
+
+        st.markdown("---")
+        st.markdown("##### Datos Geográficos")
+        latitud = st.number_input("Latitud", format="%.6f")
+        longitud = st.number_input("Longitud", format="%.6f")
+        region = st.selectbox("Región", ["Amazonia", "Andes", "Costa", "Selva", "Sierra"])
+        altura_snm = st.number_input("Altura sobre el nivel del mar (metros)", min_value=0, step=1)
+        categoria = st.selectbox("Categoría", ["Comestible", "Medicinal", "Ambas"])
+
+        # --- Botón de envío del formulario ---
+        submitted = st.form_submit_button("Guardar Planta")
+
+        if submitted:
+            # --- Validación y Recopilación de Datos ---
+            if not nombre_planta or not imagen_planta:
+                st.error("Por favor, completa al menos el nombre y sube una imagen.")
+            else:
+                # Aquí iría la lógica para guardar en la base de datos
+                st.success(f"¡Planta '{nombre_planta}' guardada exitosamente!")
+                st.info("La funcionalidad de guardado en la base de datos aún no está implementada.")
+                # Opcional: Ocultar el formulario después de guardar
+                st.session_state.show_form = False
+                st.experimental_rerun()
+
 def inicio_diccionario():
     st.title("🌿 Carrusel de Plantas")
 
@@ -42,26 +78,11 @@ def inicio_diccionario():
     
     st.markdown("---" * 50)
     st.markdown("## No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
+    
     # Agregar nueva planta
     if st.button("Agregar nueva planta"):
-        #st.write("Funcionalidad de agregar planta aún no implementada.")
-        # Aquí podrías implementar la lógica para agregar una nueva planta al diccionario.
-        # Podrías usar un formulario para ingresar el nombre, imagen y descripción de la planta.
-        st.write("Para ingresar una nueva planta, carga una imagen de la planta y completa los siguientes campos:")
-        
-        imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
-        
-        nombre_planta = st.text_input("Nombre de la planta")
-        
-        nombre_cientifico = st.text_input("Nombre científico de la planta")
-        
-        #aqui usar una consulta a la base de datos para ver si ya existe
-        #st.image(imagen_planta, caption="Imagen de la planta", use_column_width=True)
-        st.markdown("------------- Datos geográficos -------------")
-        st.image(imagen_planta, caption="Imagen de la planta", use_column_width=True)
-        descripcion_planta = st.text_area("Descripción de la planta")
-        latitud = st.number_input("Latitud de la planta", format="%.6f")
-        longitud = st.number_input("Longitud de la planta", format="%.6f")
-        region = st.selectbox("Región donde se encuentra la planta", ["Amazonia", "Andes", "Costa", "Selva", "Sierra"])
-        altura_snm = st.number_input("Altura sobre el nivel del mar (en metros)", min_value=0, max_value=10000, step=1)
-        categoria = st.selectbox("Categoría de la planta", ["Comestible", "Medicinal", "Ambas"])
+        st.session_state.show_form = True
+
+    # Mostrar el formulario si el estado es verdadero
+    if "show_form" in st.session_state and st.session_state.show_form:
+        mostrar_formulario_planta()
