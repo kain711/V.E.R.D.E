@@ -6,7 +6,9 @@ def mostrar_formulario_planta():
     """Muestra un formulario para agregar una nueva planta y maneja el envío."""
     st.subheader("Formulario para Nueva Planta")
     st.write("Completa los siguientes campos para registrar una nueva planta en el diccionario.")
-
+    if "show_form" not in st.session_state:
+        st.session_state.show_form = True
+    
     # Usar st.form para agrupar los campos y tener un único botón de envío
     with st.form(key="nueva_planta_form", clear_on_submit=True):
         # --- Campos del formulario ---
@@ -34,7 +36,7 @@ def mostrar_formulario_planta():
         nivel_humedad=st.number_input("Nivel de humedad",format="%.2f",min_value=0,max_value=100,step=1)
         
         # --- Botón de envío del formulario ---
-    submitted = st.form_submit_button("Guardar Planta")
+        submitted = st.form_submit_button("Guardar Planta")
 
     if submitted:
             # --- Validación y Recopilación de Datos ---
