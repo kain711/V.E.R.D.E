@@ -25,6 +25,8 @@ def mostrar_formulario_planta():
 
         st.markdown("---")
         st.markdown("##### Condiciones ambientales donde prospera la planta")
+        #numero float
+        
         temperatura=st.number_input("Temperatura °C",format="%.2f",min_value=0,max_value=30,step=1)
         ph_suelo=st.number_input("PH del suelo",format="%.2f",min_value=1,max_value=14,step=0.1)
         tipo_suelo=st.selectbox("Tipo de suelo",["Arcilloso","","Arenoso","Loamoso","Otro(especifique)"])
