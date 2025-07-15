@@ -32,7 +32,7 @@ def mostrar_formulario_planta():
         temperatura=st.number_input("Temperatura °C",format="%.2f",min_value=0.0,max_value=30.0,step=1)
         
         ph_suelo=st.number_input("PH del suelo",format="%.2f",min_value=1,max_value=14,step=0.1)
-        tipo_suelo=st.selectbox("Tipo de suelo",["Arcilloso","","Arenoso","Loamoso","Otro(especifique)"])
+        tipo_suelo=st.selectbox("Tipo de suelo",["Arcilloso","Arenoso","Loamoso","Otro(especifique)"])
         nivel_humedad=st.number_input("Nivel de humedad",format="%.2f",min_value=0,max_value=100,step=1)
         
         # --- Botón de envío del formulario ---
@@ -47,7 +47,7 @@ def mostrar_formulario_planta():
                 st.success(f"¡Planta '{nombre_planta}' guardada exitosamente!")
                 st.info("La funcionalidad de guardado en la base de datos aún no está implementada.")
                 # Opcional: Ocultar el formulario después de guardar
-                st.session_state.show_form = False
+                #st.session_state.show_form = False
                 st.experimental_rerun()
 
 def inicio_diccionario():
@@ -94,7 +94,7 @@ def inicio_diccionario():
     # Agregar nueva planta
     if st.button("Agregar nueva planta"):
         st.session_state.show_form = True
-
-    # Mostrar el formulario si el estado es verdadero
-    if "show_form" in st.session_state and st.session_state.show_form:
         mostrar_formulario_planta()
+    
+ 
+        
