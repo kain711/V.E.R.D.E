@@ -25,10 +25,10 @@ def mostrar_formulario_planta():
 
         st.markdown("---")
         st.markdown("##### Condiciones ambientales donde prospera la planta")
-        temperatura=st.number_input("Temperatura °C",format="%.6f")
-        ph_suelo=st.number_input("PH del suelo",format="%.6f")
+        temperatura=st.number_input("Temperatura °C",format="%.2f")
+        ph_suelo=st.number_input("PH del suelo",format="%.2f")
         tipo_suelo=st.selectbox("Tipo de suelo",["Arcilloso","","Arenoso","Loamoso","Otro(especifique)"])
-        nivel_humedad=st.number_input("Nivel de humedad",format="%.6f")
+        nivel_humedad=st.number_input("Nivel de humedad",format="%.2f")
         
         # --- Botón de envío del formulario ---
         submitted = st.form_submit_button("Guardar Planta")
