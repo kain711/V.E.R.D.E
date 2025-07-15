@@ -1,8 +1,15 @@
 import streamlit as st
 from PIL import Image
 import os
+import psycopg2 
 
 def mostrar_formulario_planta():
+    #Conectar a la base de datos
+    DB_URL='postgresql://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
+    # === CONECTAR A LA BASE DE DATOS ===
+    conn = psycopg2.connect(DB_URL)
+    cur = conn.cursor()
+    
     """Muestra un formulario para agregar una nueva planta y maneja el envío."""
     st.subheader("Formulario para Nueva Planta")
     st.write("Completa los siguientes campos para registrar una nueva planta en el diccionario.")
@@ -15,12 +22,24 @@ def mostrar_formulario_planta():
         imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
         nombre_planta = st.text_input("Nombre de la planta")
         nombre_cientifico = st.text_input("Nombre científico de la planta")
+        #comprobar si el nombre ingresado ya existe en la base de datos
+        if nombre_planta:
+            cur.execute("SELECT * FROM plantas WHERE nombre = %s", (nombre_planta,))
+            if cur.fetchone():
+                st.error("⚠️ El nombre de la planta ya existe en la base de datos.")
+                nombre_planta.disabled = True
+                nombre_cientifico.disabled = True
+                
+            else:
+                st.success("✅ El nombre de la planta es único y puede ser guardado.")
         
 
         
         
         # --- Botón de envío del formulario ---
         submitted = st.form_submit_button("Guardar Planta")
+        nombre_planta.disabled = False
+        nombre_cientifico.disabled = False
 
     if submitted:
             # --- Validación y Recopilación de Datos ---
