@@ -38,8 +38,8 @@ def mostrar_formulario_planta():
         
         # --- Botón de envío del formulario ---
         submitted = st.form_submit_button("Guardar Planta")
-        nombre_planta.disabled = False
-        nombre_cientifico.disabled = False
+        #nombre_planta.disabled = False
+        #nombre_cientifico.disabled = False
 
     if submitted:
             # --- Validación y Recopilación de Datos ---
