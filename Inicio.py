@@ -5,9 +5,13 @@ from remove_bg import *
 from modelo_predictor import predecir_etiquetas
 
 def inicio():
-    st.title("Bienvenido a la página de inicio de V.E.R.D.E")
-    #cargar el banner
+    #formatear pagina principal
+    st.set_page_config(page_title="V.E.R.D.E", page_icon="🌿", layout="wide")
     st.image("banner.png", use_column_width=True)
+    st.title("V.E.R.D.E - Visión Ecológica para el Reconocimiento de Diversas Especies")
+    st.subheader("Identifica,aprende, protege ")
+    #st.title("Bienvenido a la página de inicio de V.E.R.D.E")
+    
     st.write("Esta es la página de inicio de la aplicación. Aqui puedes subir una foto de una planta y descubrir sus beneficios.")
     st.write("Para comenzar, haz clic en el botón 'Subir foto'.")
     
