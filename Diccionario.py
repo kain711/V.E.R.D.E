@@ -44,7 +44,7 @@ def mostrar_formulario_planta():
         altura = st.number_input("Altura sobre el nivel del mar (m)", min_value=0, value=0)
         region= st.selectbox("Región geográfica", ["Sierra", "Costa", "Amazonia", "Insular"])
         
-        temporada_siembra = st.selectbox("Temporada de siembra", ["Primavera", "Verano", "Otoño", "Invierno"])
+        temporada_siembra = st.selectbox("Temporada de siembra", ["Primavera(21-Sep 20-Dic)", "Verano(21-Jun 20-Sep)", "Otoño(21-Mar 20-Jun)", "Invierno(21-Dic 20-Mar)"])
         # Temporada de floración y cosecha
         temporada_floracion = st.selectbox("Temporada de floración", ["Primavera", "Verano", "Otoño", "Invierno"])
         temporada_cosecha = st.selectbox("Temporada de cosecha", ["Primavera", "Verano", "Otoño", "Invierno"])
