@@ -3,11 +3,30 @@ import FAQ
 from Diccionario import inicio_diccionario
 from remove_bg import *
 from modelo_predictor import predecir_etiquetas
-st.set_page_config(page_title="V.E.R.D.E", page_icon="🌿", layout="wide")
-st.image("banner.png", use_column_width=True)
-st.header("Bienvenido a V.E.R.D.E:Vision Electronica para el Reconocimiento de Especies🌿")
-st.subheader("Identifica, aprende, protege")
+#from PIL import Image
+#configuracion inicial de la pagina
 
+st.set_page_config(
+    page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",
+    page_icon="🌿",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+# Banner superior si lo tienes (ej. banner.png en el mismo folder)
+st.image("banner.png", use_column_width=True)
+
+# Título central y subtítulo con énfasis
+st.markdown("<h1 style='text-align: center; color: #2e7d32;'>🌿 V.E.R.D.E.</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: #555;'>Visión Ecológica para el Reconocimiento de Diversas Especies</h3>", unsafe_allow_html=True)
+
+# Frase inspiradora
+st.markdown("<p style='text-align: center; font-size:18px; color: #777;'>Identifica, aprende y protege la flora que nos rodea.</p>", unsafe_allow_html=True)
+with st.sidebar:
+    st.header("🌱 Navegación")
+    opcion = st.radio("Ir a:", ["Inicio", "Reconocimiento", "Diccionario", "FAQ"])
+    
+    st.markdown("---")
+    st.caption("Proyecto académico • Big Data 2025")
 
 def inicio():
     #formatear pagina principal
