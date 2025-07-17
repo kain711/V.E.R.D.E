@@ -3,10 +3,11 @@ import FAQ
 from Diccionario import inicio_diccionario
 from remove_bg import *
 from modelo_predictor import predecir_etiquetas
-
+st.set_page_config(page_title="V.E.R.D.E:Visión Ecológica para el Reconocimiento de Diversas Especies", page_icon="🌿", layout="wide")
+ 
 def inicio():
     #formatear pagina principal
-    st.set_page_config(page_title="V.E.R.D.E:Visión Ecológica para el Reconocimiento de Diversas Especies", page_icon="🌿", layout="wide")
+   
     st.image("banner.png", use_column_width=True)
 
     st.subheader("Identifica,aprende, protege ")
