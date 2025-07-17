@@ -36,11 +36,14 @@ def mostrar_formulario_planta():
         temperatura_optima = st.slider("Temperatura óptima (°C)", 0, 50, 20)  
         luz_necesaria = st.selectbox("Nivel de luz necesario", ["Baja", "Media", "Alta"])
         st.write("----"*100)
-        st.write("Datos de tempoarada")
-        temporada_siembra = st.selectbox("Temporada de siembra", ["Primavera", "Verano", "Otoño", "Invierno"])
+        st.write("Datos de Ubicacacion")
+        #longitud y latitud
+        latitud = st.number_input("Latitud", format="%.6f", step=0.000001, value=0.0)
+        longitud = st.number_input("Longitud", format="%.6f", step=0)
+        #temporada_siembra = st.selectbox("Temporada de siembra", ["Primavera", "Verano", "Otoño", "Invierno"])
         # Temporada de floración y cosecha
-        temporada_floracion = st.selectbox("Temporada de floración", ["Primavera", "Verano", "Otoño", "Invierno"])
-        temporada_cosecha = st.selectbox("Temporada de cosecha", ["Primavera", "Verano", "Otoño", "Invierno"])
+        #temporada_floracion = st.selectbox("Temporada de floración", ["Primavera", "Verano", "Otoño", "Invierno"])
+        #temporada_cosecha = st.selectbox("Temporada de cosecha", ["Primavera", "Verano", "Otoño", "Invierno"])
         
         
         #comprobar si el nombre ingresado ya existe en la base de datos
