@@ -6,9 +6,9 @@ from modelo_predictor import predecir_etiquetas
 
 def inicio():
     #formatear pagina principal
-    st.set_page_config(page_title="V.E.R.D.E", page_icon="🌿", layout="wide")
+    st.set_page_config(page_title="V.E.R.D.E:Visión Ecológica para el Reconocimiento de Diversas Especies", page_icon="🌿", layout="wide")
     st.image("banner.png", use_column_width=True)
-    st.title("V.E.R.D.E - Visión Ecológica para el Reconocimiento de Diversas Especies")
+
     st.subheader("Identifica,aprende, protege ")
     #st.title("Bienvenido a la página de inicio de V.E.R.D.E")
     
