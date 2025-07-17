@@ -40,10 +40,14 @@ def mostrar_formulario_planta():
         #longitud y latitud
         latitud = st.number_input("Latitud", format="%.6f", step=0.000001, value=0.0)
         longitud = st.number_input("Longitud", format="%.6f", step=0.0)
-        #temporada_siembra = st.selectbox("Temporada de siembra", ["Primavera", "Verano", "Otoño", "Invierno"])
+        #altura sobre el nivel del mar
+        altura = st.number_input("Altura sobre el nivel del mar (m)", min_value=0, value=0)
+        region= st.selectbox("Región geográfica", ["Sierra", "Costa", "Amazonia", "Insular"])
+        
+        temporada_siembra = st.selectbox("Temporada de siembra", ["Primavera", "Verano", "Otoño", "Invierno"])
         # Temporada de floración y cosecha
-        #temporada_floracion = st.selectbox("Temporada de floración", ["Primavera", "Verano", "Otoño", "Invierno"])
-        #temporada_cosecha = st.selectbox("Temporada de cosecha", ["Primavera", "Verano", "Otoño", "Invierno"])
+        temporada_floracion = st.selectbox("Temporada de floración", ["Primavera", "Verano", "Otoño", "Invierno"])
+        temporada_cosecha = st.selectbox("Temporada de cosecha", ["Primavera", "Verano", "Otoño", "Invierno"])
         
         
         #comprobar si el nombre ingresado ya existe en la base de datos
