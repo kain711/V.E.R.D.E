@@ -19,9 +19,30 @@ def mostrar_formulario_planta():
     # Usar st.form para agrupar los campos y tener un único botón de envío
     with st.form(key="nueva_planta_form", clear_on_submit=True):
         # --- Campos del formulario ---
+        st.write("----"*100)
+        st.write("Datos generales de la planta")
         imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
-        nombre_planta = st.text_input("Nombre de la planta")
+        nombre_planta = st.text_input("Nombre comun de la planta")
         nombre_cientifico = st.text_input("Nombre científico de la planta")
+        familia=st.text_input("Familia de la planta")
+        #en categoria puede seleccionar mas de una categoria
+        categoria = st.multiselect("Categorías de la planta", ["Medicinal", "Comestible", "Decorativa", "Aromática", "Tóxica", "Otro"])
+        descripcion = st.text_area("Descripción de la planta", height=100)
+        st.write("----"*100)
+        st.write("Caracteristicas ambientales")
+        tipo_suelo = st.selectbox("Tipo de suelo", ["Arcilloso", "Arenoso", "Franco", "Pedregoso"])
+        ph_suelo = st.slider("pH del suelo", 0.0, 14.0, 7.0)
+        humedad_suelo = st.slider("Humedad del suelo (%)", 0, 100, 50)
+        temperatura_optima = st.slider("Temperatura óptima (°C)", 0, 50, 20)  
+        luz_necesaria = st.selectbox("Nivel de luz necesario", ["Baja", "Media", "Alta"])
+        st.write("----"*100)
+        st.write("Datos de tempoarada")
+        temporada_siembra = st.selectbox("Temporada de siembra", ["Primavera", "Verano", "Otoño", "Invierno"])
+        # Temporada de floración y cosecha
+        temporada_floracion = st.selectbox("Temporada de floración", ["Primavera", "Verano", "Otoño", "Invierno"])
+        temporada_cosecha = st.selectbox("Temporada de cosecha", ["Primavera", "Verano", "Otoño", "Invierno"])
+        
+        
         #comprobar si el nombre ingresado ya existe en la base de datos
         
         
