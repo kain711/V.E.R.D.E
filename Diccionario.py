@@ -39,7 +39,7 @@ def mostrar_formulario_planta():
         st.write("Datos de Ubicacacion")
         #longitud y latitud
         latitud = st.number_input("Latitud", format="%.6f", step=0.000001, value=0.0)
-        longitud = st.number_input("Longitud", format="%.6f", step=0)
+        longitud = st.number_input("Longitud", format="%.6f", step=0.0)
         #temporada_siembra = st.selectbox("Temporada de siembra", ["Primavera", "Verano", "Otoño", "Invierno"])
         # Temporada de floración y cosecha
         #temporada_floracion = st.selectbox("Temporada de floración", ["Primavera", "Verano", "Otoño", "Invierno"])
