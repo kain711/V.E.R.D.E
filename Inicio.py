@@ -6,6 +6,8 @@ from modelo_predictor import predecir_etiquetas
 
 def inicio():
     st.title("Bienvenido a la página de inicio de V.E.R.D.E")
+    #cargar el banner
+    st.image("banner.png", use_column_width=True)
     st.write("Esta es la página de inicio de la aplicación. Aqui puedes subir una foto de una planta y descubrir sus beneficios.")
     st.write("Para comenzar, haz clic en el botón 'Subir foto'.")
     
