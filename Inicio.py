@@ -12,6 +12,17 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+#cambiar color de fondo
+st.markdown(
+    """
+    <style>
+    .css-1d391kg {
+        background-color: #f0f4c3; /* Color verde claro */      
+
+    </style>
+    """
+)
+
 # Banner superior si lo tienes (ej. banner.png en el mismo folder)
 st.image("banner.png", use_column_width=True)
 
@@ -20,7 +31,7 @@ st.markdown("<h1 style='text-align: center; color: #2e7d32;'>🌿 V.E.R.D.E.</h1
 st.markdown("<h3 style='text-align: center; color: #555;'>Visión Ecológica para el Reconocimiento de Diversas Especies</h3>", unsafe_allow_html=True)
 
 # Frase inspiradora
-st.markdown("<p style='text-align: center; font-size:18px; color: #777;'>Identifica, aprende y protege la flora que nos rodea.</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; font-size:18px; color: #777;'>Identifica, aprende y protege.</p>", unsafe_allow_html=True)
 
 
 def inicio():
