@@ -68,7 +68,7 @@ def subir_foto():
 if __name__=="__main__":
     with st.sidebar:
         st.header("🌱 Navegación")
-        opcion = st.radio("Ir a:", ["Inicio", "Reconocimiento", "Diccionario", "FAQ"])
+        opcion = st.radio("Ir a:", ["Inicio", "Diccionario", "FAQ"])
         st.markdown("---")
         st.caption("Proyecto académico • Big Data 2025")
     
