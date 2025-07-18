@@ -33,8 +33,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Banner superior si lo tienes (ej. banner.png en el mismo folder)
-#st.image("banner.png", use_column_width=True)
+
 
 # Título central y subtítulo con énfasis
 st.markdown("<h1 style='text-align: center; color: #2e7d32;'>🌿 V.E.R.D.E.</h1>", unsafe_allow_html=True)
