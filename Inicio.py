@@ -16,15 +16,25 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    .css-1d391kg {
-        background-color: #f0f4c3; /* Color verde claro */      
-
+    .stApp {
+        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5lwZxxVGlsyp_EcYD1M2YVHp2N6qUx3kJYQ&s");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .block-container {
+        background-color: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(4px);
+        padding: 2rem;
+        border-radius: 10px;
+    }
     </style>
-    """
+    """,
+    unsafe_allow_html=True
 )
 
 # Banner superior si lo tienes (ej. banner.png en el mismo folder)
-st.image("banner.png", use_column_width=True)
+#st.image("banner.png", use_column_width=True)
 
 # Título central y subtítulo con énfasis
 st.markdown("<h1 style='text-align: center; color: #2e7d32;'>🌿 V.E.R.D.E.</h1>", unsafe_allow_html=True)
