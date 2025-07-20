@@ -73,7 +73,7 @@ def subir_foto():
 if __name__=="__main__":
     #st.sidebar.title("Menú")
     #pagina=st.sidebar.radio("Selecciona una página",["Inicio","Diccionario","FAQ"])
-    if opcion=="Inicio":
+    if opcion=="Reconocimiento":
         inicio()
         subir_foto()
     elif opcion=="Diccionario":
