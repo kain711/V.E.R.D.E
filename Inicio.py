@@ -48,33 +48,15 @@ def inicio():
 def subir_foto():
     uploaded_file = st.file_uploader("📷 Elige una foto de la planta", type=["jpg", "jpeg", "png"])
     
+    FOLDER_ID = "1J7PURzLitSdQ1lrL9aiac_-l_vimFhfQ"
+
     if uploaded_file is not None:
-        try:
-            # Cargar y mostrar imagen
-            imagen = Image.open(uploaded_file)
-            st.image(imagen, caption="🌿 Imagen cargada", use_column_width=True)
+        imagen = Image.open(uploaded_file)
+        imagen.save("temp.jpg")
 
-            # Guardar temporalmente
-            temp_path = "temp.jpg"
-            imagen.save(temp_path)
-
-            # Subir automáticamente a Drive
-            enlace_drive = subir_a_drive_con_servicio(temp_path, uploaded_file.name, FOLDER_ID)
-            st.write("DEBUG: intentando subir a Drive...")
-
-            st.success("✅ Imagen subida a Google Drive")
-            st.markdown(f"[🔗 Ver imagen en Drive]({enlace_drive})")
-
-            # Botón para hacer predicción
-            if st.button("🔍 Obtener detalles planta"):
-                clases, conf = predecir_etiquetas(imagen)
-                if clases and conf:
-                    resultado = "\n".join(f"- {label}: {conf[label]*100:.2f}%" for label in clases)
-                    st.success(f"🌿 La planta parece ser:\n{resultado}")
-                else:
-                    st.warning("⚠️ No se pudo realizar la predicción.")
-        except Exception as e:
-            st.error(f"❌ Error al procesar la imagen: {e}")
+        enlace = subir_a_drive_con_servicio("temp.jpg", uploaded_file.name, FOLDER_ID)
+        st.success("✅ Imagen subida a Google Drive")
+        st.markdown(f"[🔗 Ver imagen]({enlace})")
 
 
 #*************Inicio de la pagina********************

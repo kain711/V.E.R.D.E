@@ -8,3 +8,7 @@ numpy
 psycopg2-binary
 pydrive2
 Pillow
+google-api-python-client
+google-auth
+google-auth-httplib2
+google-auth-oauthlib
