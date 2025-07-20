@@ -60,6 +60,8 @@ def subir_foto():
 
             # Subir automáticamente a Drive
             enlace_drive = subir_a_drive_con_servicio(temp_path, uploaded_file.name, FOLDER_ID)
+            st.write("DEBUG: intentando subir a Drive...")
+
             st.success("✅ Imagen subida a Google Drive")
             st.markdown(f"[🔗 Ver imagen en Drive]({enlace_drive})")
 
