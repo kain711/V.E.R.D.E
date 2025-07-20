@@ -1,101 +1,76 @@
-# Tu archivo principal (ej: app.py)
+# google_drive_uploader.py
 
-import streamlit as st
-import FAQ
-from Diccionario import inicio_diccionario
-# from remove_bg import *  # Descomenta si la usas
-from modelo_predictor import predecir_etiquetas
-from PIL import Image
+import json
 import os
+from pydrive2.auth import GoogleAuth
+from pydrive2.drive import GoogleDrive
+import streamlit as st
 
-# Importa la función que acabamos de crear
-from google_drive_uploader import subir_a_drive_con_servicio
-
-# Define el ID de la carpeta de Drive en un solo lugar
-FOLDER_ID = "1J7PURzLitSdQ1lrL9aiac_-l_vimFhfQ"
-
-# Configuración de la página
-st.set_page_config(
-    page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",
-    page_icon="🌿",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# Estilos CSS (sin cambios)
-st.markdown(
+def _conectar_a_drive():
     """
-    <style>
-    .block-container {
-        background-color: rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(4px);
-        padding: 2rem;
-        border-radius: 10px;
+    Función interna para autenticarse con Google Drive.
+    No necesita ser llamada desde fuera de este archivo.
+    """
+    archivo_credenciales = "credenciales.json"
+
+    # Carga las credenciales desde el string de los secrets de Streamlit
+    credenciales_en_texto = st.secrets["google"]["service_account"]
+    credenciales_json = json.loads(credenciales_en_texto)
+
+    # Guarda las credenciales en un archivo temporal
+    with open(archivo_credenciales, "w") as f:
+        json.dump(credenciales_json, f)
+
+    # Configuración para usar una cuenta de servicio
+    settings = {
+        "client_config_backend": "service",
+        "service_config": {
+            "client_json_file_path": archivo_credenciales,
+        }
     }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
 
-# Títulos (sin cambios)
-st.markdown("<h1 style='text-align: center; color: #2e7d32;'>🌿 V.E.R.D.E.</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: #555;'>Visión Ecológica para el Reconocimiento de Diversas Especies</h3>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; font-size:18px; color: #777;'>Identifica, aprende y protege.</p>", unsafe_allow_html=True)
+    # Autenticación
+    gauth = GoogleAuth(settings=settings)
+    gauth.ServiceAuth()
 
+    # Borra el archivo temporal por seguridad
+    os.remove(archivo_credenciales)
 
-def inicio():
-    st.write("Esta es la página de inicio de la aplicación. Aqui puedes subir una foto de una planta y descubrir sus beneficios.")
-    st.write("Para comenzar, haz clic en el botón 'Subir foto'.")
-    
-def subir_foto():
-    uploaded_file = st.file_uploader("📷 Elige una foto de la planta", type=["jpg", "jpeg", "png"])
-    
-    if uploaded_file is not None:
-        try:
-            # Cargar imagen con PIL para la predicción
-            imagen_pil = Image.open(uploaded_file)
-            
-            # Mostrar la imagen cargada en la app
-            st.image(imagen_pil, caption="🌿 Imagen cargada", use_column_width=True)
+    # Devuelve el objeto para interactuar con Drive
+    return GoogleDrive(gauth)
 
-            # --- CAMBIOS IMPORTANTES AQUÍ ---
-            # Sube el archivo directamente desde la memoria, sin guardarlo temporalmente.
-            # .getvalue() lee los datos del archivo subido como bytes.
-            with st.spinner("Subiendo imagen a Google Drive..."):
-                bytes_de_imagen = uploaded_file.getvalue()
-                enlace_drive = subir_a_drive_con_servicio(bytes_de_imagen, uploaded_file.name, FOLDER_ID)
+def subir_a_drive_con_servicio(bytes_del_archivo, nombre_del_archivo, id_de_la_carpeta):
+    """
+    Sube un archivo (desde la memoria) a una carpeta específica en Google Drive.
 
-            # Si la subida fue exitosa, muestra el enlace
-            if enlace_drive:
-                st.success("✅ Imagen subida a Google Drive")
-                st.markdown(f"[🔗 Ver imagen en Drive]({enlace_drive})")
-            # --- FIN DE LOS CAMBIOS ---
+    Args:
+        bytes_del_archivo: El contenido del archivo en formato de bytes (ej: uploaded_file.getvalue()).
+        nombre_del_archivo: El nombre que tendrá el archivo en Google Drive.
+        id_de_la_carpeta: El ID de la carpeta de destino en Google Drive.
 
-            # Botón para hacer predicción (usa la imagen ya cargada en memoria)
-            if st.button("🔍 Obtener detalles planta"):
-                with st.spinner("Analizando la planta..."):
-                    clases, conf = predecir_etiquetas(imagen_pil)
-                    if clases and conf:
-                        resultado = "\n".join(f"- {label}: {conf[label]*100:.2f}%" for label in clases)
-                        st.success(f"🌿 La planta parece ser:\n{resultado}")
-                    else:
-                        st.warning("⚠️ No se pudo realizar la predicción.")
-        except Exception as e:
-            st.error(f"❌ Error al procesar la imagen: {e}")
+    Returns:
+        El enlace para ver el archivo en el navegador, o None si falla.
+    """
+    try:
+        # 1. Conectar a Google Drive
+        drive = _conectar_a_drive()
 
+        # 2. Preparar el archivo para subirlo
+        archivo_drive = drive.CreateFile({
+            'title': nombre_del_archivo,
+            'parents': [{'id': id_de_la_carpeta}]
+        })
 
-#*************Inicio de la pagina********************
-if __name__=="__main__":
-    with st.sidebar:
-        st.header("🌱 Navegación")
-        opcion = st.radio("Ir a:", ["Inicio", "Diccionario", "FAQ"])
-        st.markdown("---")
-        st.caption("Proyecto académico • Big Data 2025")
-    
-    if opcion=="Inicio":
-        inicio()
-        subir_foto()
-    elif opcion=="Diccionario":
-        inicio_diccionario()
-    elif opcion=="FAQ":
-        FAQ.inicio_faq()
+        # 3. Cargar el contenido desde los bytes en memoria
+        archivo_drive.SetContent(bytes_del_archivo)
+        
+        # 4. Subir el archivo
+        archivo_drive.Upload()
+
+        # 5. Devolver el enlace para verlo online
+        return archivo_drive.get('alternateLink')
+
+    except Exception as e:
+        st.error(f"❌ Error al subir a Drive: {e}")
+        st.info("Asegúrate de que el ID de la carpeta sea correcto y que la cuenta de servicio tenga permisos de 'Editor' sobre esa carpeta.")
+        return None
