@@ -4,23 +4,12 @@ from pydrive2.drive import GoogleDrive
 import streamlit as st
 
 def autenticar_con_cuenta_servicio():
-    # Guardar el archivo JSON temporalmente desde los secrets
+    # Guardar el archivo JSON temporal desde secrets
     with open("service_account.json", "w") as f:
-        json.dump(json.loads(st.secrets["google"]["service_account"]), f)
+        f.write(st.secrets["google"]["service_account"])  # No usar json.dump
 
-    # Leer el archivo y extraer el email de servicio
-    with open("service_account.json", "r") as f:
-        sa_data = json.load(f)
-
-    # Inicializar PyDrive2 con configuración manual
     gauth = GoogleAuth()
-    gauth.settings = {
-        "client_config_backend": "service",
-        "service_config": {
-            "client_json_file_path": "service_account.json",
-            "client_user_email": sa_data["client_email"]
-        }
-    }
+    gauth.LoadServiceConfigFile("service_account.json")  # ← esta sí sirve para cuentas de servicio si el JSON está crudo
     gauth.ServiceAuth()
     return GoogleDrive(gauth)
 
