@@ -21,12 +21,6 @@ st.markdown("<h3 style='text-align: center; color: #555;'>Visión Ecológica par
 
 # Frase inspiradora
 st.markdown("<p style='text-align: center; font-size:18px; color: #777;'>Identifica, aprende y protege la flora que nos rodea.</p>", unsafe_allow_html=True)
-with st.sidebar:
-    st.header("🌱 Navegación")
-    opcion = st.radio("Ir a:", ["Inicio", "Reconocimiento", "Diccionario", "FAQ"])
-    
-    st.markdown("---")
-    st.caption("Proyecto académico • Big Data 2025")
 
 def inicio():
     #formatear pagina principal
@@ -71,12 +65,14 @@ def subir_foto():
 
 #*************Inicio de la pagina********************
 if __name__=="__main__":
-    st.sidebar.title("Menú")
-    pagina=st.sidebar.radio("Selecciona una página",["Inicio","Diccionario","FAQ"])
-    if pagina=="Inicio":
+    st.sidebar.title("Navegación")
+    opcion = st.radio("Ir a:", ["Inicio", "Diccionario", "FAQ"])
+    st.markdown("---")
+    st.caption("Proyecto académico • Big Data 2025")
+    if opcion=="Inicio":
         inicio()
         subir_foto()
-    elif pagina=="Diccionario":
+    elif opcion=="Diccionario":
         inicio_diccionario()
-    elif pagina=="FAQ":
+    elif opcion=="FAQ":
         FAQ.inicio_faq()
