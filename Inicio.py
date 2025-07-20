@@ -29,13 +29,30 @@ with st.sidebar:
     st.caption("Proyecto académico • Big Data 2025")
 
 def inicio():
-    #formatear pagina principal
-   
-    #st.title("Bienvenido a la página de inicio de V.E.R.D.E")
-    
-    st.write("Esta es la página de inicio de la aplicación. Aqui puedes subir una foto de una planta y descubrir sus beneficios.")
-    st.write("Para comenzar, haz clic en el botón 'Subir foto'.")
-    
+   #agregar descripción del proyecto
+   st.markdown("""
+# 🌿 Bienvenido a **V.E.R.D.E.**
+### _Visión Electrónica para el Reconocimiento y Detección de Especies_
+
+---
+
+🔍 **¿Qué hace nuestro sistema?**  
+Con solo una **foto de una planta**, nuestro sistema identifica su **nombre científico y común**, y te dice si es **comestible**, **medicinal**, o ambas.
+
+🧠 Gracias a un modelo de inteligencia artificial entrenado con imágenes reales, V.E.R.D.E. reconoce especies locales con precisión y rapidez.
+
+📸 **Toma una foto, descubre su poder.**
+
+---
+
+🌱 Ideal para:
+- Agricultores
+- Estudiantes
+- Docentes
+- Curiosos de la naturaleza
+
+""", unsafe_allow_html=True)
+
 def subir_foto():
     uploaded_file = st.file_uploader("Elige una foto", type=["jpg", "jpeg", "png"])
     
