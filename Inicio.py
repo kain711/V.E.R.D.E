@@ -3,9 +3,11 @@ import FAQ
 from Diccionario import inicio_diccionario
 from remove_bg import *
 from modelo_predictor import predecir_etiquetas
-#from PIL import Image
-#configuracion inicial de la pagina
-
+from PIL import Image
+import os
+from google_drive_uploader import subir_a_drive_con_servicio
+from modelo_predictor import predecir_etiquetas
+FOLDER_ID = "1J7PURzLitSdQ1lrL9aiac_-l_vimFhfQ"
 st.set_page_config(
     page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",
     page_icon="🌿",
@@ -38,44 +40,39 @@ st.markdown("<p style='text-align: center; font-size:18px; color: #777;'>Identif
 
 
 def inicio():
-    #formatear pagina principal
-   
-    #st.title("Bienvenido a la página de inicio de V.E.R.D.E")
+    
     
     st.write("Esta es la página de inicio de la aplicación. Aqui puedes subir una foto de una planta y descubrir sus beneficios.")
     st.write("Para comenzar, haz clic en el botón 'Subir foto'.")
     
 def subir_foto():
-    uploaded_file = st.file_uploader("Elige una foto", type=["jpg", "jpeg", "png"])
+    uploaded_file = st.file_uploader("📷 Elige una foto de la planta", type=["jpg", "jpeg", "png"])
     
     if uploaded_file is not None:
-        # Convertir el archivo subido a una imagen PIL
         try:
+            # Cargar y mostrar imagen
             imagen = Image.open(uploaded_file)
-            st.image(imagen, caption="Foto subida.", use_column_width=True)
-            st.write("La foto ha sido subida correctamente.")
-            st.write("Ahora puedes explorar los beneficios de la planta.")
-            
-            # Mostrar la imagen procesada (opcional)
-            st.image(imagen, caption="Foto procesada", use_column_width=True)
-            st.write("Esta es la foto que usa el algoritmo de ML para detectar la planta")
-            
-            # Llamada a la función de predicción
-            clases, conf = predecir_etiquetas(imagen)
+            st.image(imagen, caption="🌿 Imagen cargada", use_column_width=True)
 
-            # Verificar si la predicción fue exitosa
-            if clases and conf is not None:
-                pred_text="\n".join(
-                    f"- {label}: {conf[label]*100:.2f}%" for label in clases
-                )
-                st.success(f"🌿La planta parece ser :\n{pred_text}")
-            else:
-                st.error("⚠️ No se pudo realizar la predicción.")
-        
+            # Guardar temporalmente
+            temp_path = "temp.jpg"
+            imagen.save(temp_path)
+
+            # Subir automáticamente a Drive
+            enlace_drive = subir_a_drive_con_servicio(temp_path, uploaded_file.name, FOLDER_ID)
+            st.success("✅ Imagen subida a Google Drive")
+            st.markdown(f"[🔗 Ver imagen en Drive]({enlace_drive})")
+
+            # Botón para hacer predicción
+            if st.button("🔍 Obtener detalles planta"):
+                clases, conf = predecir_etiquetas(imagen)
+                if clases and conf:
+                    resultado = "\n".join(f"- {label}: {conf[label]*100:.2f}%" for label in clases)
+                    st.success(f"🌿 La planta parece ser:\n{resultado}")
+                else:
+                    st.warning("⚠️ No se pudo realizar la predicción.")
         except Exception as e:
-            st.error(f"Error al procesar la imagen: {e}")
-            return
-
+            st.error(f"❌ Error al procesar la imagen: {e}")
 
 
 #*************Inicio de la pagina********************
