@@ -12,9 +12,15 @@ def crear_archivo_credenciales():
 def autenticar_con_cuenta_servicio():
     crear_archivo_credenciales()
     gauth = GoogleAuth()
-    gauth.LoadServiceConfigFile("service_account.json")
+    gauth.settings = {
+        "client_config_backend": "service",
+        "service_config": {
+            "client_json_file_path": "service_account.json"
+        }
+    }
     gauth.ServiceAuth()
     return GoogleDrive(gauth)
+
 
 
 # Subir archivo al folder de Drive
