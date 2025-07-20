@@ -25,7 +25,8 @@ with st.sidebar:
     st.header("🌱 Navegación")
     opcion = st.radio("Ir a:", ["Inicio", "Reconocimiento", "Diccionario", "FAQ"])
     
-   
+    st.markdown("---")
+    st.caption("Proyecto académico • Big Data 2025")
 
 def inicio():
     #formatear pagina principal
@@ -70,8 +71,8 @@ def subir_foto():
 
 #*************Inicio de la pagina********************
 if __name__=="__main__":
-    
-   
+    #st.sidebar.title("Menú")
+    #pagina=st.sidebar.radio("Selecciona una página",["Inicio","Diccionario","FAQ"])
     if opcion=="Inicio":
         inicio()
         subir_foto()
