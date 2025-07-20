@@ -60,19 +60,10 @@ def subir_foto():
         #obtener etiquetas de la imagen
         #mostrar la predicción
         etiquetas = predecir_etiquetas(imagen)
-        st.write("### Etiquetas Predichas:")
-        if etiquetas:
-            for etiqueta in etiquetas:
-                st.write(f"- {etiqueta}")
-                #formatar la etiqueta para mostrar si es medicinal o comestible
-                if etiqueta.startswith("medicinal_"):
-                    etiqueta_formateada = etiqueta.replace("medicinal_", "Medicinal: ").title()
-                else:
-                    etiqueta_formateada = etiqueta.replace("_", " ").title()
-                st.write(f"- {etiqueta_formateada}")
-        else:
-            st.write("No se pudieron predecir etiquetas para esta imagen.")
-               
+        st.write("La planta parece ser:")
+        for etiqueta in etiquetas:
+            st.write(f"- {etiqueta}")   
+        
 
 
 
