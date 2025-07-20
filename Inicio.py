@@ -15,13 +15,7 @@ st.set_page_config(
 #cambiar color de fondo
 st.markdown(
     """
-    <style>
-    .stApp {
-        background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5lwZxxVGlsyp_EcYD1M2YVHp2N6qUx3kJYQ&s");
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
+  
     .block-container {
         background-color: rgba(255, 255, 255, 0.75);
         backdrop-filter: blur(4px);
