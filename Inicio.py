@@ -62,10 +62,9 @@ def subir_foto():
         etiquetas = predecir_etiquetas(imagen)
         st.write("La planta parece ser:")
         for etiqueta in etiquetas:
-            st.write(f"- {etiqueta}")   
-        
-
-
+            st.write(f"- {etiqueta[0]} (Confianza: {etiqueta[1]:.2f})")
+        st.write("### Información Adicional:")
+        st.write("Esta planta es conocida por sus propiedades medicinales y su uso en la cocina.")
 
 #*************Inicio de la pagina********************
 if __name__=="__main__":
