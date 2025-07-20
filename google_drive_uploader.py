@@ -2,20 +2,25 @@ import json
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
 import streamlit as st
-import os
 
 def autenticar_con_cuenta_servicio():
-    # Cargar JSON desde secrets
-    service_account_info = json.loads(st.secrets["google"]["service_account"])
+    # Guardar el archivo JSON temporalmente desde los secrets
+    with open("service_account.json", "w") as f:
+        json.dump(json.loads(st.secrets["google"]["service_account"]), f)
 
-    # Guardarlo temporalmente como archivo
-    temp_json_path = "service_account.json"
-    with open(temp_json_path, "w") as f:
-        json.dump(service_account_info, f)
+    # Leer el archivo y extraer el email de servicio
+    with open("service_account.json", "r") as f:
+        sa_data = json.load(f)
 
-    # Autenticación sin usar gauth.settings (que causa el error)
+    # Inicializar PyDrive2 con configuración manual
     gauth = GoogleAuth()
-    gauth.LoadCredentialsFile(temp_json_path)
+    gauth.settings = {
+        "client_config_backend": "service",
+        "service_config": {
+            "client_json_file_path": "service_account.json",
+            "client_user_email": sa_data["client_email"]
+        }
+    }
     gauth.ServiceAuth()
     return GoogleDrive(gauth)
 
