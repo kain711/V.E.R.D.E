@@ -7,7 +7,7 @@ from PIL import Image
 import os
 from google_drive_uploader import   subir_a_drive_con_servicio
 from modelo_predictor import predecir_etiquetas
-FOLDER_ID = "1J7PURzLitSdQ1lrL9aiac_-l_vimFhfQ"
+FOLDER_ID = "1W43Xxmuz-VobzdRfoTwvqRUw4z7ToN-w"
 st.set_page_config(
     page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",
     page_icon="🌿",
