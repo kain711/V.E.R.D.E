@@ -52,11 +52,22 @@ def subir_foto():
 
     if uploaded_file is not None:
         imagen = Image.open(uploaded_file)
-        imagen.save("temp.jpg")
+        #imagen.save("temp.jpg")
 
-        enlace = subir_a_drive_con_servicio("temp.jpg", uploaded_file.name, FOLDER_ID)
+        #enlace = subir_a_drive_con_servicio("temp.jpg", uploaded_file.name, FOLDER_ID)
         st.success("✅ Imagen subida a Google Drive")
-        st.markdown(f"[🔗 Ver imagen]({enlace})")
+        #st.markdown(f"[🔗 Ver imagen]({enlace})")
+        #obtener etiquetas de la imagen
+        #mostrar la predicción
+        etiquetas = predecir_etiquetas(imagen)
+        st.write("### Etiquetas Predichas:")
+        if etiquetas:
+            for etiqueta in etiquetas:
+                st.write(f"- {etiqueta}")
+        else:
+            st.write("No se pudieron predecir etiquetas para esta imagen.")
+               
+
 
 
 #*************Inicio de la pagina********************
