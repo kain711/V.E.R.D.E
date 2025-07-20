@@ -64,6 +64,12 @@ def subir_foto():
         if etiquetas:
             for etiqueta in etiquetas:
                 st.write(f"- {etiqueta}")
+                #formatar la etiqueta para mostrar si es medicinal o comestible
+                if etiqueta.startswith("medicinal_"):
+                    etiqueta_formateada = etiqueta.replace("medicinal_", "Medicinal: ").title()
+                else:
+                    etiqueta_formateada = etiqueta.replace("_", " ").title()
+                st.write(f"- {etiqueta_formateada}")
         else:
             st.write("No se pudieron predecir etiquetas para esta imagen.")
                
