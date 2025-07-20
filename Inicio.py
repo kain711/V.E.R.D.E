@@ -71,7 +71,7 @@ def subir_foto():
 #*************Inicio de la pagina********************
 if __name__=="__main__":
     
-    opcion = st.radio("Ir a:", ["Inicio", "Diccionario", "FAQ"])
+   
     if opcion=="Inicio":
         inicio()
         subir_foto()
