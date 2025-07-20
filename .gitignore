@@ -1,0 +1,5 @@
+# Ignorar claves privadas y archivos temporales
+service_account.json
+*.pyc
+__pycache__/
+.env
