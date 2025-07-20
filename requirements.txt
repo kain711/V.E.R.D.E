@@ -6,3 +6,5 @@ matplotlib==3.7.1
 tensorflow==2.13.0
 numpy
 psycopg2-binary
+pydrive2
+Pillow
