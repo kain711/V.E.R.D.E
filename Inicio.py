@@ -83,6 +83,7 @@ def subir_foto():
         except Exception as e:
             st.error(f"Error al procesar la imagen: {e}")
             return
+    st.markdown("---" * 50)
     st.markdown("V.E.R.D.E esta en constante evolución. Si los datos presentados son erroneos, por favor reportalo en el formulario a continuacion")
    
     #crear formulario de reporte
@@ -92,8 +93,9 @@ def subir_foto():
         nombre_planta = st.text_input("Nombre de la planta", "")
         categoria_entregada = st.text_input("Categoria entregada por el sistema(toma en cuenta el porcentje mas alto)", "")
         categoria_correcta = st.text_input("Categoria correcta", "")
-        calficacion_sistema = st.slider("Calificación del sistema (1-5)", 1, 5, 3)
+        calificacion_sistema = st.slider("Calificación del sistema (1-5)", 1, 5, 3)
         comentarios = st.text_area("Comentarios adicionales", "")
+        
         # --- Botón de envío del formulario ---
         submitted = st.form_submit_button("Enviar Reporte")
         if submitted:
