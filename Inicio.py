@@ -37,7 +37,7 @@ def inicio():
 ---
 
 🔍 **¿Qué hace nuestro sistema?**  
-Con solo una **foto de una planta**, nuestro sistema identifica su **nombre científico y común**, y te dice si es **comestible**, **medicinal**, o ambas.
+Con solo una **foto de una planta**, nuestro sistema identifica su **su categoria**, y te dice si es **comestible**, **medicinal**, o ambas.
 
 🧠 Gracias a un modelo de inteligencia artificial entrenado con imágenes reales, V.E.R.D.E. reconoce especies locales con precisión y rapidez.
 
@@ -83,8 +83,8 @@ def subir_foto():
         except Exception as e:
             st.error(f"Error al procesar la imagen: {e}")
             return
-
-
+    st.markdown("V.E.R.D.E esta en constante evolución. Si los datos presentados son erroneos, por favor reportalo en el formulario a continuacion")
+    st.markdown("1. [Formulario de Reporte](https://ejemplo.com/formulario)")
 
 #*************Inicio de la pagina********************
 if __name__=="__main__":
