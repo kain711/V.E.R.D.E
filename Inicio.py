@@ -84,7 +84,24 @@ def subir_foto():
             st.error(f"Error al procesar la imagen: {e}")
             return
     st.markdown("V.E.R.D.E esta en constante evolución. Si los datos presentados son erroneos, por favor reportalo en el formulario a continuacion")
-    st.markdown("1. [Formulario de Reporte](https://ejemplo.com/formulario)")
+   
+    #crear formulario de reporte
+    st.subheader("Formulario de Reporte de Error")
+    with st.form("formulario_reporte"):
+        st.write("Nombre de la planta que ingresaste:")
+        nombre_planta = st.text_input("Nombre de la planta", "")
+        categoria_entregada = st.text_input("Categoria entregada por el sistema", "")
+        categoria_correcta = st.text_input("Categoria correcta", "")
+        calficacion_sistema = st.slider("Calificación del sistema (1-5)", 1, 5, 3)
+        comentarios = st.text_area("Comentarios adicionales", "")
+        # --- Botón de envío del formulario ---
+        submitted = st.form_submit_button("Enviar Reporte")
+        if submitted:
+            # Aquí iría la lógica para guardar en la base de datos o enviar el reporte
+            st.success("¡Reporte enviado exitosamente! Gracias por ayudarnos a mejorar V.E.R.D.E.")
+            # Opcional: Ocultar el formulario después de enviar
+            #st.session_state.show_form = False
+            st.experimental_rerun()
 
 #*************Inicio de la pagina********************
 if __name__=="__main__":
