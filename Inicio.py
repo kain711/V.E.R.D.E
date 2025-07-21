@@ -90,7 +90,7 @@ def subir_foto():
     with st.form("formulario_reporte"):
         st.write("Nombre de la planta que ingresaste:")
         nombre_planta = st.text_input("Nombre de la planta", "")
-        categoria_entregada = st.text_input("Categoria entregada por el sistema", "")
+        categoria_entregada = st.text_input("Categoria entregada por el sistema(toma en cuenta el porcentje mas alto)", "")
         categoria_correcta = st.text_input("Categoria correcta", "")
         calficacion_sistema = st.slider("Calificación del sistema (1-5)", 1, 5, 3)
         comentarios = st.text_area("Comentarios adicionales", "")
