@@ -19,6 +19,12 @@ def mostrar_formulario_planta():
     # Usar st.form para agrupar los campos y tener un único botón de envío
     with st.form(key="nueva_planta_form", clear_on_submit=True):
         # --- Campos del formulario ---
+        #datos del usuario que agrega la planta
+        st.write("Datos del usuario que agrega la planta")
+        nombre_usuario = st.text_input("Nombre del usuario")
+        correo_usuario = st.text_input("Correo del usuario")
+        password_usuario = st.text_input("Contraseña del usuario", type="password")
+        
         st.write("----"*100)
         st.write("Datos generales de la planta")
         imagen_planta = st.file_uploader("Sube una imagen de la planta", type=["jpg", "jpeg", "png"])
