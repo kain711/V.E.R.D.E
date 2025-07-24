@@ -119,6 +119,7 @@ def mostrar_datos_planta(nombre_planta, engine):
 
 # =======================
 def mostrar_formulario_planta():
+    familias_disponibles=["Orchidaceae", "Asteraceae", "Fabaceae", "Lamiaceae", "Cucurbitaceae", "Solanaceae", "Apiaceae"]
     st.subheader("Formulario para Nueva Planta")
     st.write("Completa los campos para registrar una nueva planta (función demostrativa).")
     with st.form(key="nueva_planta_form", clear_on_submit=True):
@@ -211,7 +212,8 @@ def inicio_diccionario():
         mostrar_datos_planta(planta_actual, engine)
     st.markdown("---" * 50)
     st.markdown("## No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
-    
+    familias = pd.read_sql("SELECT id_familia, nombre_familia FROM familia", engine)
+    st.write(familias)
     # Agregar nueva planta
     if st.button("Agregar nueva planta"):
         st.session_state.show_form = True
