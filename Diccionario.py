@@ -137,8 +137,8 @@ def inicio_diccionario():
 
     # Lista de plantas (orden alfabético)
     plantas = sorted([
-        "Acchocha", "Altamizo", "Cedron", "Pushasha",
-        "Romero", "Ruda", "Tomate", "Torongil"
+        "Achocha común", "Altamizo", "Cedron comun", "Uvilla silvestre",
+        "Romero hembra", "Ruda macho", "Tomate de arbol comun", "Torongil grande"
     ])
 
     # Estado del índice actual
