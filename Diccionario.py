@@ -122,18 +122,53 @@ def mostrar_formulario_planta():
     st.subheader("Formulario para Nueva Planta")
     st.write("Completa los campos para registrar una nueva planta (función demostrativa).")
     with st.form(key="nueva_planta_form", clear_on_submit=True):
+        # --- DATOS PLANTA ---
+        nombre_comun = st.text_input("Nombre común de la planta", max_chars=100)
+        nombre_cientifico = st.text_input("Nombre científico", max_chars=100)
+        tipo = st.selectbox("Tipo de planta", ["Hierba", "Arbusto", "Árbol", "Enredadera"])
+        familias = pd.read_sql("SELECT id_familia, nombre_familia FROM familia", engine)
+        familia_nombre = st.selectbox("Familia", familias['nombre_familia'])
+        id_familia = familias.loc[familias['nombre_familia'] == familia_nombre, 'id_familia'].iloc[0]
+        descripcion = st.text_area("Descripción general de la planta", height=80)
+        imagen = st.file_uploader("Imagen (opcional)", type=["png","jpg","jpeg"])
+        
+        # --- USOS ---
+        usos_lista = pd.read_sql("SELECT id_uso, nombre FROM uso", engine)
+        usos_seleccionados = st.multiselect(
+            "Usos principales", usos_lista['nombre'])
+        id_usos = usos_lista.loc[usos_lista['nombre'].isin(usos_seleccionados), 'id_uso'].tolist()
+        
+        # --- UBICACIÓN ---
+        st.markdown("#### Ubicación inicial")
+        latitud = st.number_input("Latitud", format="%.6f")
+        longitud = st.number_input("Longitud", format="%.6f")
+        altitud = st.number_input("Altitud (opcional)", min_value=0, value=2500)
+        region = st.selectbox("Región", ["Sierra", "Costa", "Amazonia", "Insular"])
+        provincia = st.text_input("Provincia")
+        canton = st.text_input("Cantón")
+        parroquia = st.text_input("Parroquia")
+        descripcion_ubic = st.text_area("Descripción del lugar", height=40)
+        
+        enviar = st.form_submit_button("Registrar planta")
+
+    if enviar:
+        st.success("¡Planta registrada exitosamente!.Gracias por ayudar a VERDE, revisaremos tu solicitud y la agregaremos al diccionario.")
+    # Aquí va la lógica SQL de inserción (INSERT en planta, variedad, variedad_uso, ubicacion_geografica, variedad_ubicacion)
+
+    """
+    with st.form(key="nueva_planta_form", clear_on_submit=True):
         nombre_comun = st.text_input("Nombre común de la planta")
         nombre_cientifico = st.text_input("Nombre científico de la planta")
-        familia = st.text_input("Familia")
+        familia = st.selectbox("Familia", ["Solanaceae", "Asteraceae", "Fabaceae", "Lamiaceae", "Cucurbitaceae","Otro"])
         tipo = st.selectbox("Tipo", ["Hierba", "Arbusto", "Árbol", "Enredadera"])
         imagen = st.file_uploader("Imagen de la planta", type=["jpg", "jpeg", "png"])
         descripcion = st.text_area("Descripción")
-
+        usos_comunes=st.selectbox("Usos comunes", ["Medicinal", "Culinario", "Decorativo", "Otro"])
         enviado = st.form_submit_button("Guardar Planta")
         if enviado:
             st.success(f"¡Planta '{nombre_comun}' guardada exitosamente! (Demo)")
             # Aquí podrías añadir la lógica real de guardado
-
+"""
 # ==========================
 def inicio_diccionario():
     st.title("🌿 Carrusel de Plantas")
