@@ -70,7 +70,7 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
         # --- Guardar planta ---
         with engine.begin() as conn:
             insert_planta = text("""
-                INSERT INTO planta (nombre_comun, nombre_cientifico, tipo, id_familia, descripcion, fecha_registro)
+                INSERT INTO planta (nombre_comun, nombre_cientifico, tipo, id_familia, fecha_registro)
                 VALUES (:nombre_comun, :nombre_cientifico, :tipo, :id_familia, :descripcion, :fecha_registro)
                 RETURNING id_planta
             """)
@@ -79,7 +79,7 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
                 "nombre_cientifico": nombre_cientifico,
                 "tipo": tipo,
                 "id_familia": id_familia,
-                "descripcion": descripcion,
+                #"descripcion": descripcion,
                 "fecha_registro": datetime.now().date()
             })
             id_planta = res.scalar()
