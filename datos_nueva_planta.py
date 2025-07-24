@@ -83,5 +83,3 @@ def formulario_registrar_planta_csv(engine,
         st.success(f"¡Planta '{nombre_comun}' registrada localmente en CSV y la imagen guardada!")
         st.write(pd.DataFrame([nueva_fila]))
 
-# Ejemplo de uso (en tu app principal):
-# formulario_registrar_planta_csv(engine)
