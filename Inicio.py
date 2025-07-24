@@ -62,14 +62,14 @@ def subir_foto():
             imagen = Image.open(uploaded_file)
             st.image(imagen, caption="Foto subida.", use_column_width=True)
             st.write("La foto ha sido subida correctamente.")
-            st.write("Ahora puedes explorar los beneficios de la planta.")
             
-            # Mostrar la imagen procesada (opcional)
-            st.image(imagen, caption="Foto procesada", use_column_width=True)
-            st.write("Esta es la foto que usa el algoritmo de ML para detectar la planta")
             
+            with st.spinner("Procesando imagen..."):
+                # Aquí puedes agregar cualquier procesamiento adicional si es necesario
+                
+
             # Llamada a la función de predicción
-            clases, conf = predecir_etiquetas(imagen)
+                clases, conf = predecir_etiquetas(imagen)
 
             # Verificar si la predicción fue exitosa
             if clases and conf is not None:

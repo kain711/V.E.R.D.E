@@ -55,17 +55,7 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
                 st.error(e)
             return
 
-        # --- Guardar imagen ---
-        imagen_filename = ""
-        if imagen is not None:
-            if not os.path.exists(carpeta_imagenes):
-                os.makedirs(carpeta_imagenes)
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            ext = os.path.splitext(imagen.name)[1]
-            imagen_filename = f"{nombre_comun.replace(' ', '_')}_{timestamp}{ext}"
-            imagen_path = os.path.join(carpeta_imagenes, imagen_filename)
-            with open(imagen_path, "wb") as f:
-                f.write(imagen.getbuffer())
+   
         
         # --- Guardar planta ---
         with engine.begin() as conn:
