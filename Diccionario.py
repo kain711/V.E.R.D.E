@@ -7,6 +7,9 @@ from sqlalchemy import create_engine
 # === CONEXIÓN UNA SOLA VEZ ===
 DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
 engine = create_engine(DB_URL)
+def guardar_datos_nueva_planta(nombre_comun, nombre_cientifico, tipo, id_familia, descripcion, imagen,
+                              usos, id_usos, latitud, longitud, altitud, region, provincia):
+    pass
 
 # ===========================
 def mostrar_datos_planta(nombre_planta, engine):
@@ -138,6 +141,8 @@ def mostrar_formulario_planta():
         usos_seleccionados = st.multiselect(
             "Usos principales", usos_lista['nombre'])
         id_usos = usos_lista.loc[usos_lista['nombre'].isin(usos_seleccionados), 'id_uso'].tolist()
+        descripcion_usos = st.text_area("Descripción de los usos", height=80)
+
         
         # --- UBICACIÓN ---
         st.markdown("#### Ubicación inicial")
@@ -212,8 +217,7 @@ def inicio_diccionario():
         mostrar_datos_planta(planta_actual, engine)
     st.markdown("---" * 50)
     st.markdown("## No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
-    familias = pd.read_sql("SELECT id_familia, nombre_familia FROM familia", engine)
-    st.write(familias)
+    
     # Agregar nueva planta
     if st.button("Agregar nueva planta"):
         st.session_state.show_form = True
