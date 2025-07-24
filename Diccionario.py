@@ -7,9 +7,6 @@ from sqlalchemy import create_engine
 # === CONEXIÓN UNA SOLA VEZ ===
 DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
 engine = create_engine(DB_URL)
-def guardar_datos_nueva_planta(nombre_comun, nombre_cientifico, tipo, id_familia, descripcion, imagen,
-                              usos, id_usos, latitud, longitud, altitud, region, provincia):
-    pass
 
 # ===========================
 def mostrar_datos_planta(nombre_planta, engine):
