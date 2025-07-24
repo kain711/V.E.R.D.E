@@ -159,16 +159,15 @@ def inicio_diccionario():
         st.warning("⚠️ Imagen no encontrada.")
 
  
-    # Botón de acción (a implementar después)
+    
     if st.button("🔍 Ver detalles"):
         mostrar_datos_planta(planta_actual, engine)
     st.markdown("---" * 50)
     st.markdown("## No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
     
     # Agregar nueva planta
-    if st.button("Agregar nueva planta"):
-        st.session_state.show_form = True
-        formulario_registrar_planta_csv(engine)
-    
+    st.subheader("Formulario para registrar nueva planta")
+    formulario_registrar_planta_csv(engine, csv_file="registro_plantas.csv", images_dir="plantas_nuevas_img")
+    st.markdown("---" * 50)
  
         
