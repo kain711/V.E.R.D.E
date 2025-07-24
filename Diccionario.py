@@ -137,8 +137,8 @@ def inicio_diccionario():
 
     # Lista de plantas (orden alfabético)
     plantas = sorted([
-        "Achocha común", "Altamizo", "Cedron comun", "Uvilla silvestre",
-        "Romero hembra", "Ruda macho", "Tomate de arbol comun", "Torongil grande"
+        "Achocha", "Altamisa", "Cedron", "Pushasha",
+        "Romero", "Ruda", "Tomate de arbol", "Torongil"
     ])
 
     # Estado del índice actual
@@ -168,13 +168,9 @@ def inicio_diccionario():
     else:
         st.warning("⚠️ Imagen no encontrada.")
 
-    # Inicializar engine (debes ajustar la cadena de conexión a tu base de datos)
-    import sqlalchemy
-    DB_URL = 'postgresql://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
-    engine = sqlalchemy.create_engine(DB_URL)
-
+ 
     # Botón de acción (a implementar después)
-    if st.button("Mostrar datos de la planta"):
+    if st.button("🔍 Ver detalles"):
         mostrar_datos_planta(planta_actual, engine)
     st.markdown("---" * 50)
     st.markdown("## No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
