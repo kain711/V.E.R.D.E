@@ -41,6 +41,7 @@ def formulario_registrar_planta_csv(engine,
         enviar = st.form_submit_button("Registrar planta")
 
     if enviar:
+        st.success("¡Se presionó el botón de registrar planta!") 
         # Guardar imagen localmente
         if imagen is not None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -53,7 +54,7 @@ def formulario_registrar_planta_csv(engine,
             imagen_filename = ""
 
         # Guardar datos en CSV
-        nueva_fila = {
+    nueva_fila = {
             "nombre_comun": nombre_comun,
             "nombre_cientifico": nombre_cientifico,
             "tipo": tipo,
@@ -73,13 +74,13 @@ def formulario_registrar_planta_csv(engine,
             "fecha_registro": datetime.now().isoformat()
         }
 
-        if os.path.exists(csv_file):
+    if os.path.exists(csv_file):
             df_existente = pd.read_csv(csv_file)
             df_nuevo = pd.concat([df_existente, pd.DataFrame([nueva_fila])], ignore_index=True)
-        else:
+    else:
             df_nuevo = pd.DataFrame([nueva_fila])
-        df_nuevo.to_csv(csv_file, index=False)
+    df_nuevo.to_csv(csv_file, index=False)
 
-        st.success(f"¡Planta '{nombre_comun}' registrada localmente en CSV y la imagen guardada!")
-        st.write(pd.DataFrame([nueva_fila]))
+    st.success(f"¡Planta '{nombre_comun}' registrada localmente en CSV y la imagen guardada!")
+    st.write(pd.DataFrame([nueva_fila]))
 
