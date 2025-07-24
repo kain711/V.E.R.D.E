@@ -84,7 +84,7 @@ def subir_foto():
             st.error(f"Error al procesar la imagen: {e}")
             return
     st.markdown("---" * 50)
-    st.markdown("V.E.R.D.E esta en constante evolución. Si los datos presentados son erroneos, por favor reportalo en la seccion de **FAQ** o **Diccionario**.")
+    st.markdown("V.E.R.D.E esta en constante evolución. Si los datos presentados son erroneos, por favor reportalo en la seccion de **FAQ**.")
    
     
 #*************Inicio de la pagina********************
