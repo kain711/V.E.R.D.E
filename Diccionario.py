@@ -14,7 +14,7 @@ def mostrar_datos_planta(nombre_planta, engine):
     SELECT 
       v.id_variedad,
       v.nombre AS nombre_variedad,
-      v.imagen,
+      
       p.nombre_comun, p.nombre_cientifico, p.tipo,
       f.nombre_familia,
       ts.tipo_suelo,
@@ -50,18 +50,17 @@ def mostrar_datos_planta(nombre_planta, engine):
 
     row0 = df.iloc[0]
     st.header(f"🌿 {row0['nombre_comun']} ({row0['nombre_cientifico']})")
-    if row0['imagen']:
-        st.image(row0['imagen'], caption=row0['nombre_variedad'], use_column_width=True)
+    
     st.write(f"**Tipo:** {row0['tipo']} | **Familia:** {row0['nombre_familia']}")
 
     # Características ambientales
     st.subheader("🧪 Características ambientales")
     st.markdown(
         f"- **Tipo de suelo:** {row0['tipo_suelo']}\n"
-        f"- **pH óptimo:** {row0['ph_min']} – {row0['ph_max']}\n"
-        f"- **Temperatura:** {row0['temp_min']}°C – {row0['temp_max']}°C\n"
+        f"- **pH óptimo:** {row0['ph_min']} - {row0['ph_max']}\n"
+        f"- **Temperatura:** {row0['temp_min']}°C - {row0['temp_max']}°C\n"
         f"- **Humedad óptima:** {row0['humedad_optima']}%\n"
-        f"- **Altitud:** {row0['altitud_min']} – {row0['altitud_max']} m.s.n.m."
+        f"- **Altitud:** {row0['altitud_min']} - {row0['altitud_max']} m.s.n.m."
     )
 
     # Mapa de ubicaciones
@@ -136,13 +135,17 @@ def mostrar_formulario_planta():
 def inicio_diccionario():
     st.title("🌿 Carrusel de Plantas")
 
-    plantas = [
-        "Achocha", "Altamizo", "Cedrón", "Pushasha",
-        "Romero", "Ruda", "Tomate de árbol", "Torongil"
-    ]
+    # Lista de plantas (orden alfabético)
+    plantas = sorted([
+        "Acchocha", "Altamizo", "Cedron", "Pushasha",
+        "Romero", "Ruda", "Tomate", "Torongil"
+    ])
+
+    # Estado del índice actual
     if "planta_index" not in st.session_state:
         st.session_state.planta_index = 0
 
+    # Navegación
     col1, col2, col3 = st.columns([1, 2, 1])
     with col1:
         if st.button("⬅️ Anterior"):
@@ -150,22 +153,36 @@ def inicio_diccionario():
     with col3:
         if st.button("Siguiente ➡️"):
             st.session_state.planta_index = (st.session_state.planta_index + 1) % len(plantas)
+    with col2:
+        st.button("🔍 Ver detalles", disabled=False)
 
+    # Planta actual
     planta_actual = plantas[st.session_state.planta_index]
     st.subheader(f"📘 {planta_actual}")
+    
+
+    # Ruta de imagen (debes tener una imagen por planta con ese nombre en plantas_img/)
     ruta_imagen = os.path.join("plantas_img", f"{planta_actual}.png")
     if os.path.exists(ruta_imagen):
         st.image(Image.open(ruta_imagen), use_column_width=True)
     else:
         st.warning("⚠️ Imagen no encontrada.")
 
-    if st.button("🔍 Ver detalles de la planta"):
+    # Inicializar engine (debes ajustar la cadena de conexión a tu base de datos)
+    import sqlalchemy
+    DB_URL = 'postgresql://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
+    engine = sqlalchemy.create_engine(DB_URL)
+
+    # Botón de acción (a implementar después)
+    if st.button("Mostrar datos de la planta"):
         mostrar_datos_planta(planta_actual, engine)
-
     st.markdown("---" * 50)
-    st.markdown("## ¿No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
-    if st.button("➕ Agregar nueva planta"):
+    st.markdown("## No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
+    
+    # Agregar nueva planta
+    if st.button("Agregar nueva planta"):
+        st.session_state.show_form = True
         mostrar_formulario_planta()
-
-# ================================
-
+    
+ 
+        
