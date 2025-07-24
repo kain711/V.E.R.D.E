@@ -43,6 +43,7 @@ def formulario_registrar_planta_csv(engine,
     if enviar:
         st.success("¡Se presionó el botón de registrar planta!") 
         # Guardar imagen localmente
+        imagen_filename = ""
         if imagen is not None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             ext = os.path.splitext(imagen.name)[1]
