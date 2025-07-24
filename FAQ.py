@@ -1,8 +1,6 @@
-import streamlit as st
-import pandas as pd
 from sqlalchemy import text
 from datetime import datetime
-from sqlalchemy import text
+import streamlit as st
 
 def formulario_sugerencias(engine):
     # Solicitar el correo electrónico
@@ -24,7 +22,8 @@ def formulario_sugerencias(engine):
                 usuario = result.fetchone()
                 
                 if usuario:
-                    id_usuario = usuario['id_usuario']
+                    # Accedemos por índice, ya que 'fetchone()' devuelve una tupla
+                    id_usuario = usuario[0]  # El primer valor es el id_usuario
                 else:
                     st.error("Correo no registrado en el sistema.")
                     return
