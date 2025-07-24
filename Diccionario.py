@@ -6,8 +6,8 @@ from datos_nueva_planta import formulario_registrar_planta_bd
 from sqlalchemy import create_engine
 
 # === CONEXIÓN UNA SOLA VEZ ===
-DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
-engine = create_engine(DB_URL)
+#DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
+#engine = create_engine(DB_URL)
 
 # ===========================
 def mostrar_datos_planta(nombre_planta, engine):
@@ -123,7 +123,7 @@ def mostrar_datos_planta(nombre_planta, engine):
 
 
 # ==========================
-def inicio_diccionario():
+def inicio_diccionario(engine_bd):
     st.title("🌿 Carrusel de Plantas")
 
     # Lista de plantas (orden alfabético)
@@ -161,7 +161,7 @@ def inicio_diccionario():
  
     
     if st.button("🔍 Ver detalles"):
-        mostrar_datos_planta(planta_actual, engine)
+        mostrar_datos_planta(planta_actual, engine_bd)
     st.markdown("---" * 50)
     st.markdown("## No es lo que buscabas? Puedes agregar una nueva planta al diccionario.")
     
@@ -174,7 +174,7 @@ def inicio_diccionario():
         st.session_state.show_form = True
 
     if st.session_state.show_form:
-        formulario_registrar_planta_bd(engine)
+        formulario_registrar_planta_bd(engine_bd)
     st.markdown("---" * 50)
  
         

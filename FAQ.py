@@ -1,77 +1,58 @@
 import streamlit as st
-from PIL import Image
+import pandas as pd
+from sqlalchemy import text
+from datetime import datetime
 
-import matplotlib.pyplot as plt
-import time
-
-#Configuraciones para personalización
-FUENTE = "Arial"
-TAM_TEXTO = "20px"
-TAM_TITULO = "25px"
-TAM_IMAGEN = 200  # Ancho en píxeles de las imágenes de integrantes
-def inicio_faq():
-#  Estilo CSS personalizado
-    st.markdown(f"""
-        <style>
-        html, body, [class*="css"]  {{
-            font-family: {FUENTE};
-            font-size: {TAM_TEXTO};
-        }}
-        h1 {{
-            font-size: {TAM_TITULO};
-        }}
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Título principal
-    st.title("V.E.R.D.E")
-
-    # Descripción del proyecto
-    st.write(
-        "Desarrollar un sistema inteligente de reconocimiento de plantas locales, "
-        "utilizando técnicas avanzadas de procesamiento de imágenes y algoritmos de "
-        "aprendizaje automático supervisado, que permita la identificación y "
-        "clasificación automática de especies vegetales pertenecientes a la ciudad de Cuenca."
-    )
-
-    #Datos del equipo
-    integrantes = [
-        {
-            "nombre": "Alexis Matute",
-            "imagen": "Contactos/imajen.1.png",
-            "correo": "alexis.matute.est@tecazuay.edu.ec",
-            "genero": "Masculino",
-            "edad": 18,
-            "aporte": "Desarrollo del modelo de clasificación de especies."
-        },
-        {
-            "nombre": "Andres Mejia",
-            "imagen": "Contactos/imajen.2.png",
-            "correo": "jose.mejia.est@tecazuay.edu.ec",
-            "genero": "Masculino",
-            "edad": 23,
-            "aporte": "Diseño de la interfaz y procesamiento de imágenes."
-        },
-        {
-            "nombre": "Paulo Tenecela",
-            "imagen": "Contactos/imajen.3.png",
-            "correo": "paulo.tenecela.est@tecazuay.edu.ec",
-            "genero": "Masculino",
-            "edad": 25,
-            "aporte": "Recolección de datos y validación del sistema."
-        }
-    ]
-
-    # Mostrar integrantes
-    cols = st.columns(3)
-    for col, integrante in zip(cols, integrantes):
-        with col:
-            st.image(Image.open(integrante["imagen"]), width=TAM_IMAGEN)
-            st.markdown(f"### {integrante['nombre']}")
-            st.write(f"📧 Correo: {integrante['correo']}")
-            st.write(f"👤 Género: {integrante['genero']}")
-            st.write(f"🎂 Edad: {integrante['edad']} años")
-            st.write(f"🧩 Aporte: {integrante['aporte']}")
-
-    # Analizador de archivos
+def formulario_sugerencias(engine):
+    # Solicitar el correo electrónico
+    correo_usuario = st.text_input("Introduce tu correo electrónico")
     
+    # Validación del correo
+    if correo_usuario:
+        # Consulta el id_usuario basado en el correo
+        query_usuario = text("""
+            SELECT id_usuario 
+            FROM usuario 
+            WHERE correo = :correo_usuario
+        """)
+        result = engine.execute(query_usuario, {"correo_usuario": correo_usuario})
+        usuario = result.fetchone()
+        
+        if usuario:
+            id_usuario = usuario['id_usuario']
+        else:
+            st.error("Correo no registrado en el sistema.")
+            return
+        
+        # Mostrar los campos de sugerencias
+        with st.form("form_sugerencias"):
+            st.subheader("Sugerencias sobre el modelo predictor")
+
+            # Campos de entrada
+            comentario_usuario = st.text_area("Comentario adicional", height=100)
+            precision_modelo = st.number_input("Precisión del modelo (0 a 1)", min_value=0.0, max_value=1.0, value=0.85)
+            calificacion_usuario = st.slider("Calificación del usuario", min_value=1, max_value=5, value=3)
+
+            # Botón para enviar
+            submit_button = st.form_submit_button("Enviar sugerencia")
+
+        if submit_button:
+            # Insertar en la tabla 'reconocimiento' con los datos
+            try:
+                insert_reconocimiento = text("""
+                    INSERT INTO reconocimiento (id_usuario, fecha, comentario_usuario, precision_modelo, calificacion_usuario)
+                    VALUES (:id_usuario, :fecha, :comentario_usuario, :precision_modelo, :calificacion_usuario)
+                """)
+                engine.execute(insert_reconocimiento, {
+                    "id_usuario": id_usuario,
+                    "fecha": datetime.now(),
+                    "comentario_usuario": comentario_usuario,
+                    "precision_modelo": precision_modelo,
+                    "calificacion_usuario": calificacion_usuario
+                })
+                
+                st.success("¡Gracias por tu sugerencia! Tu opinión es muy valiosa.")
+            except Exception as e:
+                st.error(f"Hubo un error al guardar tu sugerencia: {e}")
+    else:
+        st.warning("Por favor, ingresa tu correo electrónico.")

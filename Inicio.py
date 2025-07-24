@@ -1,10 +1,12 @@
 import streamlit as st
-import FAQ
+from FAQ import formulario_sugerencias
 from Diccionario import inicio_diccionario
 from PIL import Image
 from modelo_predictor import predecir_etiquetas
-#from PIL import Image
-#configuracion inicial de la pagina
+from sqlalchemy import create_engine
+DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
+engine = create_engine(DB_URL)
+
 
 st.set_page_config(
     page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",
@@ -94,6 +96,6 @@ if __name__=="__main__":
     if opcion=="Reconocimiento":
         subir_foto()
     elif opcion=="Diccionario":
-        inicio_diccionario()
+        inicio_diccionario(engine)
     elif opcion=="FAQ":
-        FAQ.inicio_faq()
+        formulario_sugerencias(engine)
