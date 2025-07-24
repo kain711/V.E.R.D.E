@@ -101,7 +101,7 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
 
             # --- Guardar ubicación geográfica y enlace ---
             insert_ubic = text("""
-    I             INSERT INTO ubicacion_geografica (latitud, longitud, altitud_msnm, region, parroquia, canton, provincia, descripcion)
+                 INSERT INTO ubicacion_geografica (latitud, longitud, altitud_msnm, region, parroquia, canton, provincia, descripcion)
                   VALUES (:latitud, :longitud, :altitud, :region, :parroquia, :canton, :provincia, :descripcion_ubic)
                 RETURNING id_ubicacion
                         """)
