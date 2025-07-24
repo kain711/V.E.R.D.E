@@ -84,16 +84,14 @@ def subir_foto():
             st.error(f"Error al procesar la imagen: {e}")
             return
     st.markdown("---" * 50)
-    st.markdown("V.E.R.D.E esta en constante evolución. Si los datos presentados son erroneos, por favor reportalo en el formulario a continuacion")
+    st.markdown("V.E.R.D.E esta en constante evolución. Si los datos presentados son erroneos, por favor reportalo en la seccion de **FAQ** o **Diccionario**.")
    
     
 #*************Inicio de la pagina********************
 if __name__=="__main__":
-    #st.sidebar.title("Menú")
-    #pagina=st.sidebar.radio("Selecciona una página",["Inicio","Diccionario","FAQ"])
+   
     inicio()
     if opcion=="Reconocimiento":
-        #inicio()
         subir_foto()
     elif opcion=="Diccionario":
         inicio_diccionario()
