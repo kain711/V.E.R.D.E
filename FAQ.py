@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import text
 from datetime import datetime
+from sqlalchemy import text
+
 def formulario_sugerencias(engine):
     # Solicitar el correo electrónico
     correo_usuario = st.text_input("Introduce tu correo electrónico")
@@ -10,12 +12,14 @@ def formulario_sugerencias(engine):
         try:
             # Establecer la conexión
             with engine.connect() as conn:
-                # Consulta el id_usuario basado en el correo
-                query_usuario = """
+                # Usamos text() para escribir la consulta SQL
+                query_usuario = text("""
                     SELECT id_usuario 
                     FROM usuario 
                     WHERE correo = :correo_usuario
-                """
+                """)
+                
+                # Ejecutamos la consulta con el parámetro
                 result = conn.execute(query_usuario, {"correo_usuario": correo_usuario})
                 usuario = result.fetchone()
                 
@@ -41,10 +45,10 @@ def formulario_sugerencias(engine):
                 # Insertar en la tabla 'reconocimiento' con los datos
                 try:
                     with engine.connect() as conn:
-                        insert_reconocimiento = """
+                        insert_reconocimiento = text("""
                             INSERT INTO reconocimiento (id_usuario, fecha, comentario_usuario, precision_modelo, calificacion_usuario)
                             VALUES (:id_usuario, :fecha, :comentario_usuario, :precision_modelo, :calificacion_usuario)
-                        """
+                        """)
                         conn.execute(insert_reconocimiento, {
                             "id_usuario": id_usuario,
                             "fecha": datetime.now(),
