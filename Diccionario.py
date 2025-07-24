@@ -14,7 +14,7 @@ def mostrar_datos_planta(nombre_planta, engine):
     SELECT 
       v.id_variedad,
       v.nombre AS nombre_variedad,
-      
+      p.nombre_comun,
       p.nombre_cientifico, p.tipo,
       f.nombre_familia,
       ts.tipo_suelo,
