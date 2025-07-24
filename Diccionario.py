@@ -15,7 +15,7 @@ def mostrar_datos_planta(nombre_planta, engine):
       v.id_variedad,
       v.nombre AS nombre_variedad,
       
-      p.nombre_comun, p.nombre_cientifico, p.tipo,
+      p.nombre_cientifico, p.tipo,
       f.nombre_familia,
       ts.tipo_suelo,
       ca.ph_min, ca.ph_max, ca.temp_min, ca.temp_max, ca.humedad_optima, ca.altitud_min, ca.altitud_max,
