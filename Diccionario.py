@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import os
 import pandas as pd
-from datos_nueva_planta import formulario_registrar_planta_csv
+from datos_nueva_planta import formulario_registrar_planta_bd
 from sqlalchemy import create_engine
 
 # === CONEXIÓN UNA SOLA VEZ ===
@@ -167,7 +167,14 @@ def inicio_diccionario():
     
     # Agregar nueva planta
     st.subheader("Formulario para registrar nueva planta")
-    formulario_registrar_planta_csv(engine, csv_file="registro_plantas.csv", images_dir="plantas_nuevas_img")
+    if "show_form" not in st.session_state:
+        st.session_state.show_form = False
+
+    if st.button("Agregar nueva planta"):
+        st.session_state.show_form = True
+
+    if st.session_state.show_form:
+        formulario_registrar_planta_bd(engine)
     st.markdown("---" * 50)
  
         
