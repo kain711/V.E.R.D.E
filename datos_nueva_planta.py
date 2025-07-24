@@ -41,47 +41,21 @@ def formulario_registrar_planta_csv(engine,
         enviar = st.form_submit_button("Registrar planta")
 
     if enviar:
-        st.success("¡Se presionó el botón de registrar planta!") 
-        # Guardar imagen localmente
         imagen_filename = ""
-        if imagen is not None:
-            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            ext = os.path.splitext(imagen.name)[1]
-            imagen_filename = f"{nombre_comun.replace(' ', '_')}_{timestamp}{ext}"
-            imagen_path = os.path.join(images_dir, imagen_filename)
-            with open(imagen_path, "wb") as f:
-                f.write(imagen.getbuffer())
-        else:
-            imagen_filename = ""
+        st.success("¡Botón presionado!")
+        nueva_fila = {"nombre_comun": nombre_comun, "test": 123, "imagen_archivo": imagen_filename}
+        try:
+            if os.path.exists("plantas.csv"):
+                df_existente = pd.read_csv("plantas.csv")
+                df_nuevo = pd.concat([df_existente, pd.DataFrame([nueva_fila])], ignore_index=True)
+            else:
+                df_nuevo = pd.DataFrame([nueva_fila])
+            df_nuevo.to_csv("plantas.csv", index=False)
+            st.success("¡CSV guardado como plantas.csv!")
+            st.write(pd.DataFrame([nueva_fila]))
+        except Exception as e:
+            st.error(f"Error guardando CSV: {e}")
 
-        # Guardar datos en CSV
-        nueva_fila = {
-            "nombre_comun": nombre_comun,
-            "nombre_cientifico": nombre_cientifico,
-            "tipo": tipo,
-            "id_familia": id_familia,
-            "familia_nombre": familia_nombre,
-            "descripcion": descripcion,
-            "imagen_archivo": imagen_filename,
-            "usos": ",".join(map(str, id_usos)),
-            "usos_nombres": ",".join(usos_seleccionados),
-            "latitud": latitud,
-            "longitud": longitud,
-            "altitud": altitud,
-            "region": region,
-            "provincia": provincia,
-            "canton": canton,
-            "parroquia": parroquia,
-            "descripcion_ubic": descripcion_ubic,
-            "fecha_registro": datetime.now().isoformat()
-        }
-
-        if os.path.exists(csv_file):
-            df_existente = pd.read_csv(csv_file)
-            df_nuevo = pd.concat([df_existente, pd.DataFrame([nueva_fila])], ignore_index=True)
-        else:
-            df_nuevo = pd.DataFrame([nueva_fila])
-        df_nuevo.to_csv(csv_file, index=False)
 
         st.success(f"¡Planta '{nombre_comun}' registrada localmente en CSV y la imagen guardada!")
         st.write(pd.DataFrame([nueva_fila]))

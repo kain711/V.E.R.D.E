@@ -1,7 +1,7 @@
 import streamlit as st
 import FAQ
 from Diccionario import inicio_diccionario
-
+from PIL import Image
 from modelo_predictor import predecir_etiquetas
 #from PIL import Image
 #configuracion inicial de la pagina
