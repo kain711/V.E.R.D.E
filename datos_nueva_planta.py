@@ -15,6 +15,8 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
         tipo = st.selectbox("Tipo de planta *", ["Hierba", "Arbusto", "Árbol", "Enredadera", "Otro"])
         familia_nombre = st.selectbox("Familia *", familias['nombre_familia'])
         id_familia = familias.loc[familias['nombre_familia'] == familia_nombre, 'id_familia'].iloc[0]
+        id_familia = int(familias.loc[familias['nombre_familia'] == familia_nombre, 'id_familia'].iloc[0])
+
         descripcion = st.text_area("Descripción general de la planta", height=80)
         imagen = st.file_uploader("Imagen (opcional)", type=["png","jpg","jpeg"])
         
