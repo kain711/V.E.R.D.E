@@ -65,6 +65,9 @@ def mostrar_datos_planta(nombre_planta, engine):
 
     # Mapa de ubicaciones
     ubic = df[['latitud', 'longitud']].dropna().drop_duplicates()
+    # 🔄 Cambia los nombres a inglés para Streamlit
+    ubic = ubic.rename(columns={'latitud': 'latitude', 'longitud': 'longitude'})
+    
     if not ubic.empty:
         st.subheader("🗺️ Ubicaciones donde crece")
         st.map(ubic)
