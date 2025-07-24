@@ -18,7 +18,7 @@ def formulario_registrar_planta_csv(engine,
         nombre_comun = st.text_input("Nombre común de la planta", max_chars=100)
         nombre_cientifico = st.text_input("Nombre científico", max_chars=100)
         st.text("Si no conoces el nombre científico, puedes dejarlo en blanco.")
-        tipo = st.selectbox("Tipo de planta", ["Hierba", "Arbusto", "Árbol", "Enredadera","Otro"])
+        tipo = st.selectbox("Tipo de planta", ["Hierba", "Arbusto", "Árbol", "Enredadera", "Otro"])
         familia_nombre = st.selectbox("Familia", familias['nombre_familia'])
         id_familia = familias.loc[familias['nombre_familia'] == familia_nombre, 'id_familia'].iloc[0]
         descripcion = st.text_area("Descripción general de la planta", height=80)
@@ -55,7 +55,7 @@ def formulario_registrar_planta_csv(engine,
             imagen_filename = ""
 
         # Guardar datos en CSV
-    nueva_fila = {
+        nueva_fila = {
             "nombre_comun": nombre_comun,
             "nombre_cientifico": nombre_cientifico,
             "tipo": tipo,
@@ -64,6 +64,7 @@ def formulario_registrar_planta_csv(engine,
             "descripcion": descripcion,
             "imagen_archivo": imagen_filename,
             "usos": ",".join(map(str, id_usos)),
+            "usos_nombres": ",".join(usos_seleccionados),
             "latitud": latitud,
             "longitud": longitud,
             "altitud": altitud,
@@ -75,13 +76,12 @@ def formulario_registrar_planta_csv(engine,
             "fecha_registro": datetime.now().isoformat()
         }
 
-    if os.path.exists(csv_file):
+        if os.path.exists(csv_file):
             df_existente = pd.read_csv(csv_file)
             df_nuevo = pd.concat([df_existente, pd.DataFrame([nueva_fila])], ignore_index=True)
-    else:
+        else:
             df_nuevo = pd.DataFrame([nueva_fila])
-    df_nuevo.to_csv(csv_file, index=False)
+        df_nuevo.to_csv(csv_file, index=False)
 
-    st.success(f"¡Planta '{nombre_comun}' registrada localmente en CSV y la imagen guardada!")
-    st.write(pd.DataFrame([nueva_fila]))
-
+        st.success(f"¡Planta '{nombre_comun}' registrada localmente en CSV y la imagen guardada!")
+        st.write(pd.DataFrame([nueva_fila]))
