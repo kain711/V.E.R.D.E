@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, Table, MetaData
 from datetime import datetime
 import streamlit as st
-
+from sqlalchemy.sql import text
 # Definir la tabla 'reconocimiento' usando SQLAlchemy
 metadata = MetaData()
 engine = create_engine('postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db')
