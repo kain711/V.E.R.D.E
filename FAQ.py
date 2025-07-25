@@ -4,12 +4,35 @@ from sqlalchemy import text
 from datetime import datetime
 
 def formulario_sugerencias(engine):
+    st.header("📝 Sugerencias y Comentarios sobre el Reconocimiento de Plantas")
+    st.markdown("""
+    Por favor, comparte tus sugerencias o comentarios sobre el sistema de reconocimiento de plantas.        
+    """)
+    # Inicializar valores por defecto
+    if 'form_submitted' not in st.session_state:
+        st.session_state.form_submitted = False
+    
+    # Resetear valores después de envío exitoso
+    if st.session_state.form_submitted:
+        correo_default = ""
+        precision_default = 0.0
+        clases_default = ""
+        comentario_default = ""
+        calificacion_default = 1
+        st.session_state.form_submitted = False
+    else:
+        correo_default = ""
+        precision_default = 0.0
+        clases_default = ""
+        comentario_default = ""
+        calificacion_default = 1
+
     with st.form("sugerencia_reconocimiento"):
-        correo_usuario = st.text_input("Correo electrónico *")
-        precision_modelo = st.number_input("Precisión del modelo (%)", min_value=0.0, max_value=100.0, value=0.0)
-        clases_predichas = st.text_area("Clases reconocidas por el sistema (separadas por comas)")
-        comentario_usuario = st.text_area("Comentario *")
-        calificacion_usuario = st.selectbox("Calificación *", [1, 2, 3, 4, 5])
+        correo_usuario = st.text_input("Correo electrónico *", value=correo_default)
+        precision_modelo = st.number_input("Precisión del modelo (%)", min_value=0.0, max_value=100.0, value=precision_default)
+        clases_predichas = st.text_area("Clases predichas", value=clases_default)
+        comentario_usuario = st.text_area("Comentario *", value=comentario_default)
+        calificacion_usuario = st.selectbox("Calificación *", [1, 2, 3, 4, 5], index=calificacion_default-1)
         
         enviar = st.form_submit_button("Enviar Sugerencia")
 
@@ -54,7 +77,8 @@ def formulario_sugerencias(engine):
                 })
                 
             st.success("¡Sugerencia registrada exitosamente!")
-            st.experimental_rerun()
-
+            st.session_state.form_submitted = True
+            st.rerun()
+            
         except Exception as e:
             st.error(f"Error: {str(e)}")
