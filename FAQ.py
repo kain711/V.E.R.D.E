@@ -1,6 +1,16 @@
-from sqlalchemy import text, insert
+from sqlalchemy import create_engine, Table, MetaData
 from datetime import datetime
 import streamlit as st
+
+# Definir la tabla 'reconocimiento' usando SQLAlchemy
+metadata = MetaData()
+engine = create_engine('postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db')
+
+reconocimiento = Table(
+    'reconocimiento', metadata,
+    autoload_with=engine,  # Cargar la tabla directamente desde la base de datos
+    autoload=True
+)
 
 def formulario_sugerencias(engine):
     correo_usuario = st.text_input("Introduce tu correo electrónico", key="correo_usuario")
@@ -44,9 +54,9 @@ def formulario_sugerencias(engine):
                 })
 
                 try:
-                    # Usamos insert() de SQLAlchemy para la inserción en lugar de text()
+                    # Usar la tabla 'reconocimiento' de SQLAlchemy para insertar
                     with engine.connect() as conn:
-                        insert_reconocimiento = insert(text('reconocimiento')).values(
+                        ins = reconocimiento.insert().values(
                             id_usuario=id_usuario,
                             fecha=datetime.now(),
                             precision_modelo=precision_modelo,
@@ -54,15 +64,13 @@ def formulario_sugerencias(engine):
                             comentario_usuario=comentario_usuario,
                             calificacion_usuario=calificacion_usuario
                         )
+                        conn.execute(ins)
 
-                        # Ejecutar el insert
-                        conn.execute(insert_reconocimiento)
-                    
                     st.success("¡Gracias por tu sugerencia! Tu opinión es muy valiosa.")
 
                 except Exception as e:
                     st.error(f"Hubo un error al guardar tu sugerencia en la base de datos: {e}")
-                    
+
         except Exception as e:
             st.error(f"Hubo un error al conectar con la base de datos: {e}")
     else:
