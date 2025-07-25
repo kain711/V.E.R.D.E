@@ -2,6 +2,8 @@ from sqlalchemy import text
 from datetime import datetime
 import streamlit as st
 
+from sqlalchemy import text
+
 def formulario_sugerencias(engine):
     correo_usuario = st.text_input("Introduce tu correo electrónico", key="correo_usuario")
 
@@ -43,24 +45,21 @@ def formulario_sugerencias(engine):
 
                 try:
                     with engine.connect() as conn:
+                        # Asegurándonos de que la consulta se ejecute correctamente
                         insert_reconocimiento = text("""
                             INSERT INTO reconocimiento (id_usuario, fecha, comentario_usuario, precision_modelo, calificacion_usuario)
                             VALUES (:id_usuario, :fecha, :comentario_usuario, :precision_modelo, :calificacion_usuario)
                         """)
 
-                        # Imprimir la consulta y los parámetros para verificar
-                        st.write(f"Consulta SQL: {insert_reconocimiento}")
-                        st.write(f"Parámetros: {{'id_usuario': {id_usuario}, 'fecha': {datetime.now()}, 'comentario_usuario': {comentario_usuario}, 'precision_modelo': {precision_modelo}, 'calificacion_usuario': {calificacion_usuario}}}")
-
-                        # Ejecutar el insert
+                        # Ahora ejecutamos la consulta correctamente
                         conn.execute(insert_reconocimiento, {
                             "id_usuario": id_usuario,
-                            "fecha": datetime.now(),
+                            "fecha": datetime.now(),  # Usamos datetime.now() para la fecha
                             "comentario_usuario": comentario_usuario,
                             "precision_modelo": precision_modelo,
                             "calificacion_usuario": calificacion_usuario
                         })
-                    
+
                     st.success("¡Gracias por tu sugerencia! Tu opinión es muy valiosa.")
 
                 except Exception as e:
