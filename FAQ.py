@@ -51,8 +51,18 @@ def formulario_sugerencias(engine):
                             VALUES (:id_usuario, :fecha, :precision_modelo, :clases_predichas, :comentario_usuario, :calificacion_usuario)
                         """)
 
+                        # Depurar la consulta que se va a ejecutar
+                        st.write(f"Ejecutando consulta con parámetros: {{
+                            'id_usuario': {id_usuario},
+                            'fecha': {datetime.now()},
+                            'comentario_usuario': {comentario_usuario},
+                            'precision_modelo': {precision_modelo},
+                            'clases_predichas': {clases_predichas},
+                            'calificacion_usuario': {calificacion_usuario}
+                        }}")
+
                         # Ejecutar el insert
-                        conn.execute(insert_reconocimiento, {
+                        result = conn.execute(insert_reconocimiento, {
                             "id_usuario": id_usuario,
                             "fecha": datetime.now(),
                             "precision_modelo": precision_modelo,
@@ -60,12 +70,15 @@ def formulario_sugerencias(engine):
                             "comentario_usuario": comentario_usuario,
                             "calificacion_usuario": calificacion_usuario
                         })
+                        
+                        # Confirmar la ejecución
+                        st.write(f"Datos insertados correctamente, ID del reconocimiento: {result.inserted_primary_key}")
 
                     st.success("¡Gracias por tu sugerencia! Tu opinión es muy valiosa.")
 
                 except Exception as e:
                     st.error(f"Hubo un error al guardar tu sugerencia en la base de datos: {e}")
-                    
+
         except Exception as e:
             st.error(f"Hubo un error al conectar con la base de datos: {e}")
     else:
