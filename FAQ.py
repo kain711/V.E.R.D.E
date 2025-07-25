@@ -54,7 +54,7 @@ def formulario_sugerencias(engine):
                 })
                 
             st.success("¡Sugerencia registrada exitosamente!")
-            st.rerun()
-            
+            st.experimental_rerun()
+
         except Exception as e:
             st.error(f"Error: {str(e)}")
