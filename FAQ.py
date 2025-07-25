@@ -7,7 +7,9 @@ def formulario_sugerencias(engine):
 
     if correo_usuario:
         try:
+            # Establecer la conexión
             with engine.connect() as conn:
+                # Usamos text() para escribir la consulta SQL
                 query_usuario = text("""
                     SELECT id_usuario 
                     FROM usuario 
@@ -17,7 +19,7 @@ def formulario_sugerencias(engine):
                 usuario = result.fetchone()
                 
                 if usuario:
-                    id_usuario = usuario[0]
+                    id_usuario = usuario[0]  # El primer valor es el id_usuario
                 else:
                     st.error("Correo no registrado en el sistema.")
                     return
@@ -45,6 +47,12 @@ def formulario_sugerencias(engine):
                             INSERT INTO reconocimiento (id_usuario, fecha, comentario_usuario, precision_modelo, calificacion_usuario)
                             VALUES (:id_usuario, :fecha, :comentario_usuario, :precision_modelo, :calificacion_usuario)
                         """)
+
+                        # Imprimir la consulta y los parámetros para verificar
+                        st.write(f"Consulta SQL: {insert_reconocimiento}")
+                        st.write(f"Parámetros: {{'id_usuario': {id_usuario}, 'fecha': {datetime.now()}, 'comentario_usuario': {comentario_usuario}, 'precision_modelo': {precision_modelo}, 'calificacion_usuario': {calificacion_usuario}}}")
+
+                        # Ejecutar el insert
                         conn.execute(insert_reconocimiento, {
                             "id_usuario": id_usuario,
                             "fecha": datetime.now(),
@@ -52,12 +60,12 @@ def formulario_sugerencias(engine):
                             "precision_modelo": precision_modelo,
                             "calificacion_usuario": calificacion_usuario
                         })
-
+                    
                     st.success("¡Gracias por tu sugerencia! Tu opinión es muy valiosa.")
 
                 except Exception as e:
                     st.error(f"Hubo un error al guardar tu sugerencia en la base de datos: {e}")
-                    
+
         except Exception as e:
             st.error(f"Hubo un error al conectar con la base de datos: {e}")
     else:
