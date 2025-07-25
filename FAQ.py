@@ -52,14 +52,14 @@ def formulario_sugerencias(engine):
                         """)
 
                         # Depurar la consulta que se va a ejecutar
-                        st.write(f"Ejecutando consulta con parámetros: {{
-                            'id_usuario': {id_usuario},
-                            'fecha': {datetime.now()},
-                            'comentario_usuario': {comentario_usuario},
-                            'precision_modelo': {precision_modelo},
-                            'clases_predichas': {clases_predichas},
-                            'calificacion_usuario': {calificacion_usuario}
-                        }}")
+                        st.write("Ejecutando consulta con parámetros:", {
+                            'id_usuario': id_usuario,
+                            'fecha': datetime.now(),
+                            'comentario_usuario': comentario_usuario,
+                            'precision_modelo': precision_modelo,
+                            'clases_predichas': clases_predichas,
+                            'calificacion_usuario': calificacion_usuario
+                        })
 
                         # Ejecutar el insert
                         result = conn.execute(insert_reconocimiento, {
