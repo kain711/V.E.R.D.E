@@ -3,14 +3,6 @@ from datetime import datetime
 import streamlit as st
 from sqlalchemy.sql import text
 # Definir la tabla 'reconocimiento' usando SQLAlchemy
-metadata = MetaData()
-engine = create_engine('postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db')
-
-reconocimiento = Table(
-    'reconocimiento', metadata,
-    autoload_with=engine,  # Cargar la tabla directamente desde la base de datos
-    autoload=True
-)
 
 def formulario_sugerencias(engine):
     correo_usuario = st.text_input("Introduce tu correo electrónico", key="correo_usuario")
