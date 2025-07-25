@@ -40,14 +40,14 @@ def formulario_sugerencias(engine):
                 
                 # Insertar sugerencia
                 insert_reconocimiento = text("""
-                    INSERT INTO reconocimiento (id_usuario, fecha, presicion_modelo, clases_predichas, comentario_usuario, calificacion_usuario)
-                    VALUES (:id_usuario, :fecha, :presicion_modelo, :clases_predichas, :comentario_usuario, :calificacion_usuario)
+                    INSERT INTO reconocimiento (id_usuario, fecha, precision_modelo, clases_predichas, comentario_usuario, calificacion_usuario)
+                    VALUES (:id_usuario, :fecha, :precision_modelo, :clases_predichas, :comentario_usuario, :calificacion_usuario)
                 """)
                 
                 conn.execute(insert_reconocimiento, {
                     "id_usuario": id_usuario,
                     "fecha": datetime.now().date(),
-                    "presicion_modelo": precision_modelo,
+                    "precision_modelo": precision_modelo,
                     "clases_predichas": clases_predichas.strip(),
                     "comentario_usuario": comentario_usuario.strip(),
                     "calificacion_usuario": calificacion_usuario
