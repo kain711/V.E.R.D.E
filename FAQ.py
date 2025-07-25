@@ -4,10 +4,6 @@ from sqlalchemy import text
 from datetime import datetime
 
 def formulario_sugerencias(engine):
-    st.header("📝 Sugerencias y Comentarios sobre el Reconocimiento de Plantas")
-    st.markdown("""
-    Por favor, comparte tus sugerencias o comentarios sobre el sistema de reconocimiento de plantas.        
-    """)
     # Inicializar valores por defecto
     if 'form_submitted' not in st.session_state:
         st.session_state.form_submitted = False
@@ -78,7 +74,7 @@ def formulario_sugerencias(engine):
                 
             st.success("¡Sugerencia registrada exitosamente!")
             st.session_state.form_submitted = True
-            st.rerun()
+            st.experimental_rerun()
             
         except Exception as e:
             st.error(f"Error: {str(e)}")
