@@ -7,7 +7,7 @@ def formulario_sugerencias(engine):
     with st.form("sugerencia_reconocimiento"):
         correo_usuario = st.text_input("Correo electrónico *")
         precision_modelo = st.number_input("Precisión del modelo (%)", min_value=0.0, max_value=100.0, value=0.0)
-        clases_reconocidas = st.text_area("Clases reconocidas por el sistema (separadas por comas)")
+        clases_predichas = st.text_area("Clases reconocidas por el sistema (separadas por comas)")
         comentario_usuario = st.text_area("Comentario *")
         calificacion_usuario = st.selectbox("Calificación *", [1, 2, 3, 4, 5])
         
