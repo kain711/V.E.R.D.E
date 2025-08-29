@@ -4,9 +4,14 @@ from Diccionario import inicio_diccionario
 from PIL import Image
 from modelo_predictor import predecir_etiquetas
 from sqlalchemy import create_engine
+from pathlib import Path
+#obtener la ruta absoluta del directorio actual
+script_dir = Path(__file__).parent
+#construir la ruta completa a la base de datos
+db_path = script_dir / "VERDE.db"
+#crear el enginie usando la ruta absoluta
 #DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
-engine = create_engine('sqlite:///VERDE.db')
-
+engine= create_engine(f'sqlite:///{db_path}')
 
 st.set_page_config(
     page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",

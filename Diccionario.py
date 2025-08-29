@@ -3,7 +3,7 @@ from PIL import Image
 import os
 import pandas as pd
 from datos_nueva_planta import formulario_registrar_planta_bd
-from sqlalchemy import create_engine
+#from sqlalchemy import create_engine
 
 # === CONEXIÓN UNA SOLA VEZ ===
 #DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
@@ -151,7 +151,7 @@ def inicio_diccionario(engine_bd):
     st.subheader(f"📘 {planta_actual}")
     
 
-    # Ruta de imagen (debes tener una imagen por planta con ese nombre en plantas_img/)
+    # Ruta de imagen 
     ruta_imagen = os.path.join("plantas_img", f"{planta_actual}.png")
     if os.path.exists(ruta_imagen):
         st.image(Image.open(ruta_imagen), use_column_width=True)
