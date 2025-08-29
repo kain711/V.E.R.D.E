@@ -4,7 +4,7 @@ from Diccionario import inicio_diccionario
 from PIL import Image
 from modelo_predictor import predecir_etiquetas
 from sqlalchemy import create_engine
-DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
+#DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
 engine = create_engine('sqlite:///VERDE.db')
 
 
