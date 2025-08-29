@@ -13,6 +13,19 @@ db_path = script_dir / "VERDE.db"
 #crear el enginie usando la ruta absoluta
 #DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
 engine= create_engine(f'sqlite:///{db_path}')
+
+st.set_page_config(
+    page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",
+    page_icon="🌿",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+# Banner superior si lo tienes (ej. banner.png en el mismo folder)
+st.image("banner.png", use_column_width=True)
+
+# Título central y subtítulo con énfasis
+st.markdown("<h1 style='text-align: center; color: #2e7d32;'>🌿 V.E.R.D.E.</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: #555;'>Visión Ecológica para el Reconocimiento de Diversas Especies</h3>", unsafe_allow_html=True)
 # ... tu código existente ...
 engine = create_engine(f'sqlite:///{db_path}')
 
@@ -68,19 +81,6 @@ st.markdown("---")
 
 st.set_page_config(
 # ... el resto de tu código continúa aquí ...
-st.set_page_config(
-    page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",
-    page_icon="🌿",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-# Banner superior si lo tienes (ej. banner.png en el mismo folder)
-st.image("banner.png", use_column_width=True)
-
-# Título central y subtítulo con énfasis
-st.markdown("<h1 style='text-align: center; color: #2e7d32;'>🌿 V.E.R.D.E.</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: #555;'>Visión Ecológica para el Reconocimiento de Diversas Especies</h3>", unsafe_allow_html=True)
-
 # Frase inspiradora
 st.markdown("<p style='text-align: center; font-size:18px; color: #777;'>Identifica, aprende y protege la flora que nos rodea.</p>", unsafe_allow_html=True)
 with st.sidebar:
