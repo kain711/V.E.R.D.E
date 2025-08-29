@@ -125,6 +125,7 @@ def mostrar_datos_planta(nombre_planta, engine):
 # ==========================
 def inicio_diccionario(engine_bd):
     st.title("🌿 Carrusel de Plantas")
+    
 
     # Lista de plantas (orden alfabético)
     plantas = sorted([
