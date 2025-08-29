@@ -5,6 +5,7 @@ from PIL import Image
 from modelo_predictor import predecir_etiquetas
 from sqlalchemy import create_engine
 from pathlib import Path
+import pandas as pd
 #obtener la ruta absoluta del directorio actual
 script_dir = Path(__file__).parent
 #construir la ruta completa a la base de datos
@@ -12,7 +13,61 @@ db_path = script_dir / "VERDE.db"
 #crear el enginie usando la ruta absoluta
 #DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
 engine= create_engine(f'sqlite:///{db_path}')
+# ... tu código existente ...
+engine = create_engine(f'sqlite:///{db_path}')
 
+# ===================================================================
+# INICIO DEL PANEL DE DEPURACIÓN DE BASE DE DATOS
+# ===================================================================
+with st.expander("🐞 Panel de Depuración de Base de Datos"):
+    st.write(f"Ruta absoluta construida para la BD: `{db_path}`")
+    
+    # 1. Verificar si el archivo existe físicamente
+    if db_path.exists():
+        st.success("✅ El archivo `VERDE.db` SÍ existe en la ruta.")
+        
+        # 2. Verificar el tamaño del archivo
+        file_size = db_path.stat().st_size
+        st.info(f"Tamaño del archivo: **{file_size} bytes**.")
+        
+        if file_size < 1000: # Un DB real tendrá más de 1KB
+            st.error("🚨 ¡ALERTA! El archivo es muy pequeño o está vacío. Esto confirma que se está creando uno nuevo en lugar de usar el del repositorio.")
+        else:
+            st.success("El tamaño del archivo parece correcto.")
+            
+    else:
+        st.error("🚨 ¡ERROR CRÍTICO! El archivo `VERDE.db` NO se encuentra en la ruta esperada.")
+        # Opcional: Listar archivos en el directorio para ver qué hay
+        try:
+            st.write("Archivos encontrados en el directorio del script:")
+            files_in_dir = [f.name for f in script_dir.iterdir()]
+            st.code(files_in_dir)
+        except Exception as e:
+            st.write(f"No se pudo listar el directorio: {e}")
+
+    # 3. Intentar una consulta universal para listar las tablas
+    try:
+        with engine.connect() as connection:
+            st.info("Intentando conectar y listar tablas...")
+            query_tablas = "SELECT name FROM sqlite_master WHERE type='table';"
+            df_tablas = pd.read_sql(query_tablas, connection)
+            
+            if not df_tablas.empty:
+                st.success("✅ Conexión exitosa. Tablas encontradas en la BD:")
+                st.dataframe(df_tablas)
+            else:
+                st.warning("⚠️ La conexión fue exitosa, pero la base de datos NO contiene tablas. Esto confirma que está vacía.")
+    except Exception as e:
+        st.error(f"🚨 Error al ejecutar la consulta de prueba: {e}")
+
+st.markdown("---")
+# ===================================================================
+# FIN DEL PANEL DE DEPURACIÓN
+# ===================================================================
+
+
+st.set_page_config(
+# ... el resto de tu código continúa aquí ...
 st.set_page_config(
     page_title="V.E.R.D.E. 🌱 | Reconocimiento de Plantas",
     page_icon="🌿",
