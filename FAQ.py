@@ -91,7 +91,7 @@ def formulario_sugerencias(engine):
                         "nombre": "", "correo": "", "precision": 0.0, 
                         "clases": "", "comentario": "", "calificacion": 3
                     }
-                    st.rerun()
+                    st.experimental_rerun()
 
         except Exception as e:
             st.error(f"Ocurrió un error inesperado: {str(e)}")
