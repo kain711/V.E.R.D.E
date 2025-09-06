@@ -13,8 +13,7 @@ env/
 # Streamlit secrets
 .streamlit/secrets.toml
 
-# Machine Learning Models (muy importante)
-*.h5
+
 
 # Compressed files / Archives
 *.rar
