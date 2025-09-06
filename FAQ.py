@@ -8,16 +8,18 @@ def formulario_sugerencias(engine):
     st.header("📝 Formulario de Sugerencias y Errores")
     st.caption("Ayúdanos a mejorar V.E.R.D.E. reportando cualquier error o sugerencia.")
 
+    # --- PASO 1 (PARTE A): INICIALIZAR EL ESTADO DE LA SESIÓN ---
+    # Esto asegura que 'form_data' exista en la memoria de la sesión del usuario.
     if 'form_data' not in st.session_state:
         st.session_state.form_data = {
             "nombre": "", "correo": "", "precision": 0.0, 
             "clases": "", "comentario": "", "calificacion": 3
         }
 
-    # El bloque del formulario
     with st.form("sugerencia_reconocimiento"):
         st.info("Si es tu primera vez, se creará un usuario con tu correo y contraseña.")
         
+        # --- PASO 1 (PARTE B): VINCULAR CADA WIDGET AL SESSION_STATE ---
         nombre_usuario = st.text_input("Tu nombre de usuario *", value=st.session_state.form_data["nombre"])
         correo_usuario = st.text_input("Correo electrónico *", value=st.session_state.form_data["correo"])
         contraseña = st.text_input("Contraseña *", type="password") 
@@ -29,11 +31,8 @@ def formulario_sugerencias(engine):
         comentario_usuario = st.text_area("Comentario *", value=st.session_state.form_data["comentario"])
         calificacion_usuario = st.selectbox("Calificación *", [1, 2, 3, 4, 5], index=st.session_state.form_data["calificacion"] - 1)
         
-        # --- LÍNEA CORREGIDA Y AÑADIDA ---
-        # El botón de envío DEBE estar DENTRO del bloque 'with st.form'.
         enviar = st.form_submit_button("Enviar Sugerencia")
 
-    # La lógica que se ejecuta después de presionar el botón (esto está fuera del 'with')
     if enviar:
         if not nombre_usuario.strip() or not correo_usuario.strip() or not contraseña or not comentario_usuario.strip():
             st.error("Por favor, completa todos los campos marcados con *.")
@@ -91,6 +90,29 @@ def formulario_sugerencias(engine):
                         "nombre": "", "correo": "", "precision": 0.0, 
                         "clases": "", "comentario": "", "calificacion": 3
                     }
+                    st.experimental_rerun()
+
+        except Exception as e:
+            st.error(f"Ocurrió un error inesperado: {str(e)}")
+        
+        try:
+            with engine.begin() as conn:
+                # (Toda la lógica de buscar/crear usuario e insertar sugerencia)
+                # ...
+                
+                # Al final de toda la lógica exitosa, hacemos los pasos 2 y 3.
+                if id_usuario: # Suponiendo que la inserción fue exitosa
+                    # ... (código de inserción de la sugerencia) ...
+                    
+                    st.success("¡Sugerencia registrada exitosamente! Gracias por tu contribución.")
+                    
+                    # --- PASO 2: RESETEAR LOS VALORES EN SESSION_STATE ---
+                    st.session_state.form_data = {
+                        "nombre": "", "correo": "", "precision": 0.0, 
+                        "clases": "", "comentario": "", "calificacion": 3
+                    }
+                    
+                    # --- PASO 3: FORZAR LA RE-EJECUCIÓN DEL SCRIPT ---
                     st.experimental_rerun()
 
         except Exception as e:
