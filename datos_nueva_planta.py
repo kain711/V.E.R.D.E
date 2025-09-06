@@ -62,8 +62,9 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
             insert_planta = text("""
                 INSERT INTO planta (nombre_comun, nombre_cientifico, tipo, id_familia, fecha_registro)
                 VALUES (:nombre_comun, :nombre_cientifico, :tipo, :id_familia, :fecha_registro)
-                RETURNING id_planta
             """)
+            #elimine returning id_planta porque en sqlite no funciona
+            
             res = conn.execute(insert_planta, {
                 "nombre_comun": nombre_comun,
                 "nombre_cientifico": nombre_cientifico,
@@ -72,13 +73,15 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
                 
                 "fecha_registro": datetime.now().date()
             })
-            id_planta = res.scalar()
+            #acceder al id_planta insertado
+            id_planta = res.lastrowid
+            
 
-            # --- Guardar variedad inicial (opcional: puedes ajustar) ---
+            # --- Guardar variedad inicial 
             insert_variedad = text("""
                 INSERT INTO variedad (id_planta, nombre, descripcion, estado, id_origen)
                 VALUES (:id_planta, :nombre, :descripcion, :estado, :id_origen)
-                RETURNING id_variedad
+                
             """)
             res = conn.execute(insert_variedad, {
                 "id_planta": id_planta,
@@ -87,13 +90,13 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
                 "estado": "activo",
                 "id_origen": 1  # Ajusta si tienes selección de origen
             })
-            id_variedad = res.scalar()
+            id_variedad = res.lastrowid
 
             # --- Guardar ubicación geográfica y enlace ---
             insert_ubic = text("""
                  INSERT INTO ubicacion_geografica (latitud, longitud, altitud_msnm, region, parroquia, canton, provincia, descripcion)
                   VALUES (:latitud, :longitud, :altitud, :region, :parroquia, :canton, :provincia, :descripcion_ubic)
-                RETURNING id_ubicacion
+                
                         """)
             res = conn.execute(insert_ubic, {
                 "latitud": latitud,
@@ -105,7 +108,7 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
                 "provincia": provincia,
                 "descripcion_ubic": descripcion_ubic
                                             })
-            id_ubicacion = res.scalar()  # Obtiene el id_ubicacion generado automáticamente
+            id_ubicacion = res.lastrowid  # Obtiene el id_ubicacion generado automáticamente
 
             # Relacionar variedad con ubicación
             insert_var_ubic = text("""
