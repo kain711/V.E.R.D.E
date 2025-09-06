@@ -10,3 +10,4 @@ pydrive2
 Pillow
 pandas
 sqlalchemy
+passlib
