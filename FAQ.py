@@ -2,6 +2,30 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import text
 from datetime import datetime
+def crear_nuevo_usuario(engine,nomb_usuario,correo,contraseña):
+    try:
+        with engine.begin() as conn:
+            insert_usuario=text("""
+                                INSERT INTO usuario(nom_usuario,correo,pass,rol,estado_activo)
+                                VALUES(:nomb_usuario,:correo,:contraseña,"usuario",1)
+                                """)
+            conn.execute(insert_usuario, {
+                "nomb_usuario": nomb_usuario,
+                "correo": correo,
+                "pass": contraseña,
+                "rol": "usuario",
+                "estado_activo": 1
+            })
+            #obtener id_usuario
+            query_id=text("""
+                            SELECT id_usuario FROM usuario WHERE correo=:correo
+                            """)
+            nuevo_usuario=conn.execute(query_id,{"correo":correo})
+            
+            return nuevo_usuario.fetchone()[0]
+
+    except Exception as e:
+        st.error(f"Error al crear usuario: {e}")
 
 def formulario_sugerencias(engine):
     # Inicializar valores por defecto
@@ -52,10 +76,15 @@ def formulario_sugerencias(engine):
                 usuario = resultado.fetchone()
                 
                 if not usuario:
-                    st.error("Usuario no encontrado.")
+                    try:
+                        id_usuario=crear_nuevo_usuario(engine,correo_usuario.strip())
+                        st.info(f"Nuevo usuario creado con correo {correo_usuario.strip()}.")
+                    except Exception as e:  
+                        st.error(f"Error al crear usuario: {e}")        
+                        
                     return
-                
-                id_usuario = usuario[0]
+                else:
+                    id_usuario = usuario[0]
                 
                 # Insertar sugerencia
                 insert_reconocimiento = text("""
