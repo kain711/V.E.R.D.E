@@ -129,8 +129,8 @@ def inicio_diccionario(engine_bd):
 
     # Lista de plantas (orden alfabético)
     plantas = sorted([
-        "Achojcha", "Altamiso", "Cedron", "Pushasha",
-        "Romero", "Ruda", "Tomate de arbol", "Torongil"
+        "Achojcha", "Altamiso", "Cedrón", "Pushasha(Uvilla)",
+        "Romero", "Ruda", "Tomate de árbol", "Torongil"
     ])
 
     # Estado del índice actual
