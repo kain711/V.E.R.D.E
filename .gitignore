@@ -1,6 +1,33 @@
-# Ignorar claves privadas y archivos temporales
-service_account.json
-*.pyc
+# Python bytecode
 __pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables
 .env
-V.E.R.D.E.rar
+
+# Streamlit secrets
+.streamlit/secrets.toml
+
+# Machine Learning Models (muy importante)
+*.h5
+
+# Compressed files / Archives
+*.rar
+*.zip
+
+# SQLite temporary files
+*.db-journal
+*.db-wal
+*.db-shm
+
+# DB Browser for SQLite project files
+*.sqbpro
+
+# OS-specific files
+.DS_Store
+Thumbs.db
