@@ -13,10 +13,6 @@ db_path = script_dir / "VERDE.db"
 #crear el enginie usando la ruta absoluta
 #DB_URL = 'postgresql+psycopg2://proyectofinal:rZGqCr99dLsIrdk3gyh9Rd2CloMxJd8Z@dpg-d1r5hlbe5dus73ea3utg-a.oregon-postgres.render.com/verde_db'
 engine= create_engine(f'sqlite:///{db_path}')
-# ... tu código existente ...
-
-
-
 
 
 st.set_page_config(

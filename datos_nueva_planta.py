@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from sqlalchemy import text
 from datetime import datetime
-import os
+import sqlite3
 
 def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
     # Carga familias y usos
@@ -58,78 +58,86 @@ def formulario_registrar_planta_bd(engine, carpeta_imagenes="plantas_img"):
    
         
         # --- Guardar planta ---
-        with engine.begin() as conn:
-            insert_planta = text("""
-                INSERT INTO planta (nombre_comun, nombre_cientifico, tipo, id_familia, fecha_registro)
-                VALUES (:nombre_comun, :nombre_cientifico, :tipo, :id_familia, :fecha_registro)
-            """)
-            #elimine returning id_planta porque en sqlite no funciona
-            
-            res = conn.execute(insert_planta, {
-                "nombre_comun": nombre_comun,
-                "nombre_cientifico": nombre_cientifico,
-                "tipo": tipo,
-                "id_familia": id_familia,
-                
-                "fecha_registro": datetime.now().date()
-            })
-            #acceder al id_planta insertado
-            id_planta = res.lastrowid
-            
-
-            # --- Guardar variedad inicial 
-            insert_variedad = text("""
-                INSERT INTO variedad (id_planta, nombre, descripcion, estado, id_origen)
-                VALUES (:id_planta, :nombre, :descripcion, :estado, :id_origen)
-                
-            """)
-            res = conn.execute(insert_variedad, {
-                "id_planta": id_planta,
-                "nombre": nombre_comun,  # misma que la planta por defecto
-                "descripcion": descripcion,
-                "estado": "activo",
-                "id_origen": 1  # Ajusta si tienes selección de origen
-            })
-            id_variedad = res.lastrowid
-
-            # --- Guardar ubicación geográfica y enlace ---
-            insert_ubic = text("""
-                 INSERT INTO ubicacion_geografica (latitud, longitud, altitud_msnm, region, parroquia, canton, provincia, descripcion)
-                  VALUES (:latitud, :longitud, :altitud, :region, :parroquia, :canton, :provincia, :descripcion_ubic)
-                
-                        """)
-            res = conn.execute(insert_ubic, {
-                "latitud": latitud,
-                "longitud": longitud,
-                "altitud": altitud,
-                "region": region,
-                "parroquia": parroquia,
-                "canton": canton,
-                "provincia": provincia,
-                "descripcion_ubic": descripcion_ubic
-                                            })
-            id_ubicacion = res.lastrowid  # Obtiene el id_ubicacion generado automáticamente
-
-            # Relacionar variedad con ubicación
-            insert_var_ubic = text("""
-                INSERT INTO variedad_ubicacion (id_variedad, id_ubicacion, tipo_sitio, frecuencia, observaciones, fecha_registro)
-                VALUES (:id_variedad, :id_ubicacion, '', '', '', :fecha_registro)
-            """)
-            conn.execute(insert_var_ubic, {
-                "id_variedad": id_variedad,
-                "id_ubicacion": id_ubicacion,
-                "fecha_registro": datetime.now().date()
-            })
-
-            # Guardar los usos principales
-            for id_uso in id_usos:
-                insert_var_uso = text("""
-                    INSERT INTO variedad_uso (id_variedad, id_uso)
-                    VALUES (:id_variedad, :id_uso)
-                    ON CONFLICT DO NOTHING
+        try:
+            with engine.begin() as conn:
+                insert_planta = text("""
+                    INSERT INTO planta (nombre_comun, nombre_cientifico, tipo, id_familia, fecha_registro)
+                    VALUES (:nombre_comun, :nombre_cientifico, :tipo, :id_familia, :fecha_registro)
                 """)
-                conn.execute(insert_var_uso, {"id_variedad": id_variedad, "id_uso": id_uso})
+                #elimine returning id_planta porque en sqlite no funciona
+                
+                res = conn.execute(insert_planta, {
+                    "nombre_comun": nombre_comun,
+                    "nombre_cientifico": nombre_cientifico,
+                    "tipo": tipo,
+                    "id_familia": id_familia,
+                    
+                    "fecha_registro": datetime.now().date()
+                })
+                #acceder al id_planta insertado
+                id_planta = res.lastrowid
+                
 
-        st.success("¡Planta registrada exitosamente en la base de datos!")
-        st.session_state.show_form = False
+                # --- Guardar variedad inicial 
+                insert_variedad = text("""
+                    INSERT INTO variedad (id_planta, nombre, descripcion, estado, id_origen)
+                    VALUES (:id_planta, :nombre, :descripcion, :estado, :id_origen)
+                    
+                """)
+                res = conn.execute(insert_variedad, {
+                    "id_planta": id_planta,
+                    "nombre": nombre_comun,  # misma que la planta por defecto
+                    "descripcion": descripcion,
+                    "estado": "activo",
+                    "id_origen": 1  # Ajusta si tienes selección de origen
+                })
+                id_variedad = res.lastrowid
+
+                # --- Guardar ubicación geográfica y enlace ---
+                insert_ubic = text("""
+                    INSERT INTO ubicacion_geografica (latitud, longitud, altitud_msnm, region, parroquia, canton, provincia, descripcion)
+                    VALUES (:latitud, :longitud, :altitud, :region, :parroquia, :canton, :provincia, :descripcion_ubic)
+                    
+                            """)
+                res = conn.execute(insert_ubic, {
+                    "latitud": latitud,
+                    "longitud": longitud,
+                    "altitud": altitud,
+                    "region": region,
+                    "parroquia": parroquia,
+                    "canton": canton,
+                    "provincia": provincia,
+                    "descripcion_ubic": descripcion_ubic
+                                                })
+                id_ubicacion = res.lastrowid  # Obtiene el id_ubicacion generado automáticamente
+
+                # Relacionar variedad con ubicación
+                insert_var_ubic = text("""
+                    INSERT INTO variedad_ubicacion (id_variedad, id_ubicacion, tipo_sitio, frecuencia, observaciones, fecha_registro)
+                    VALUES (:id_variedad, :id_ubicacion, '', '', '', :fecha_registro)
+                """)
+                conn.execute(insert_var_ubic, {
+                    "id_variedad": id_variedad,
+                    "id_ubicacion": id_ubicacion,
+                    "fecha_registro": datetime.now().date()
+                })
+
+                # Guardar los usos principales
+                for id_uso in id_usos:
+                    insert_var_uso = text("""
+                        INSERT INTO variedad_uso (id_variedad, id_uso)
+                        VALUES (:id_variedad, :id_uso)
+                        ON CONFLICT DO NOTHING
+                    """)
+                    conn.execute(insert_var_uso, {"id_variedad": id_variedad, "id_uso": id_uso})
+
+            st.success("¡Planta registrada exitosamente en la base de datos!")
+            st.session_state.show_form = False
+
+        except sqlite3.IntegrityError as e:
+            st.error(f"La planta ya existe en la base de datos, solo puede registrar nuevos datos {str(e)}")
+        except Exception as e:
+            st.error(f"Ocurrió un error inesperado: {str(e)}")
+
         st.experimental_rerun()
+

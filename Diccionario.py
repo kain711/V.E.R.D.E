@@ -176,6 +176,7 @@ def inicio_diccionario(engine_bd):
 
     if st.session_state.show_form:
         formulario_registrar_planta_bd(engine_bd)
-    st.markdown("---" * 50)
+    
+   
  
         
