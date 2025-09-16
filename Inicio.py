@@ -70,7 +70,7 @@ def subir_foto():
         # Convertir el archivo subido a una imagen PIL
         try:
             imagen = Image.open(uploaded_file)
-            imagen = imagen.resize((500, 500))
+            #imagen = imagen.resize((500, 500))
             st.image(imagen, caption="Foto subida.", use_column_width=True,width=300)
             st.write("La foto ha sido subida correctamente.")
             
