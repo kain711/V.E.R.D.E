@@ -71,7 +71,7 @@ def subir_foto():
         try:
             imagen = Image.open(uploaded_file)
             #imagen = imagen.resize((500, 500))
-            st.image(imagen, caption="Foto subida.", use_column_width=True,width=300)
+            st.image(imagen, caption="Foto subida.", use_column_width=True,width=100)
             st.write("La foto ha sido subida correctamente.")
             
             
