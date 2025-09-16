@@ -72,7 +72,7 @@ def subir_foto():
             imagen = Image.open(uploaded_file)
             ancho, alto = imagen.size
 
-            nuevo_ancho = 500
+            nuevo_ancho = 300
             nuevo_alto = int(alto * nuevo_ancho / ancho)
             img_n= imagen.resize((nuevo_ancho, nuevo_alto), Image.LANCZOS)
 
