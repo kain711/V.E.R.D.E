@@ -76,7 +76,7 @@ def subir_foto():
             nuevo_alto = int(alto * nuevo_ancho / ancho)
             img_n= imagen.resize((nuevo_ancho, nuevo_alto), Image.LANCZOS)
 
-            st.image(img_n, caption="Foto subida.", use_column_width=True)
+            
             st.write("La foto ha sido subida correctamente.")
             
             
@@ -93,6 +93,7 @@ def subir_foto():
                     f"- {label}: {conf[label]*100:.2f}%" for label in clases
                 )
                 st.success(f"🌿La planta parece ser :\n{pred_text}")
+                st.image(img_n, caption="Foto subida.", use_column_width=True)
             else:
                 st.error("⚠️ No se pudo realizar la predicción.")
         
