@@ -76,7 +76,7 @@ def subir_foto():
             nuevo_alto = int(alto * nuevo_ancho / ancho)
             img_n= imagen.resize((nuevo_ancho, nuevo_alto), Image.LANCZOS)
 
-            st.image(img_n, caption="Foto subida.", use_column_width=True,width=100)
+            st.image(img_n, caption="Foto subida.", use_column_width=True)
             st.write("La foto ha sido subida correctamente.")
             
             
