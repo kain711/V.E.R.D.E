@@ -12,7 +12,7 @@ etiquetas = ['medicinal', 'comestible']
 def predecir_etiquetas(imagen, umbral=0.5):
     try:
         imagen = imagen.convert("RGB")
-        #imagen = imagen.resize((100, 100))
+        imagen = imagen.resize((100, 100))
         img_array = np.array(imagen) / 255.0
         img_array = np.expand_dims(img_array, axis=0)
 
